@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">StoryAppDicoding</string>
+    <string name="enter_your">Masukkan %1$s anda</string>
+    <string name="is_empty">%1$s tidak boleh kosong</string>
+    <string name="email">email</string>
+    <string name="email_not_valid">Email tidak valid</string>
+    <string name="message_login">Hei,\nLogin Sekarang</string>
+    <string name="no_account_message">Tidak Punya akun? /</string>
+    <string name="create_new"><u>Buat Baru</u></string>
 </resources>
