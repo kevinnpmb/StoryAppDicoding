@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">StoryAppDicoding</string>
+    <string name="app_name">Stapp</string>
     <string name="enter_your">Masukkan %1$s anda</string>
     <string name="is_empty">%1$s tidak boleh kosong</string>
     <string name="email">email</string>
@@ -7,4 +7,6 @@
     <string name="message_login">Hei,\nLogin Sekarang</string>
     <string name="no_account_message">Tidak Punya akun? /</string>
     <string name="create_new"><u>Buat Baru</u></string>
+    <string name="password">Kata Sandi</string>
+    <string name="login">Login</string>
 </resources>

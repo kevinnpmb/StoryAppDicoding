@@ -26,10 +26,11 @@ class StoryAppTextInputLayout(context: Context, private val attr: AttributeSet) 
         title = typedArray.getString(R.styleable.StoryAppTextInputLayout_title) ?: ""
         typedArray.recycle()
         boxBackgroundColor = ContextCompat.getColor(context, R.color.white)
+        boxBackgroundMode = BOX_BACKGROUND_OUTLINE
         setBoxCornerRadii(8.dpToPx, 8.dpToPx, 8.dpToPx, 8.dpToPx)
         isExpandedHintEnabled = false
         hint = title
-        editText?.setPaddingRelative(12, 0, 12, 0)
+        editText?.setPaddingRelative(4, 0, 4, 0)
         editText?.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
         editText?.hint = context.getString(R.string.enter_your, title)
         editText?.addTextChangedListener(object : TextWatcher {

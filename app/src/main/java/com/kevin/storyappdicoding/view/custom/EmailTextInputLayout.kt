@@ -37,12 +37,13 @@ class EmailTextInputLayout : TextInputLayout {
     private fun init() {
         hint = context.getString(R.string.enter_your, context.getString(R.string.email))
         boxBackgroundColor = ContextCompat.getColor(context, R.color.white)
+        boxBackgroundMode = BOX_BACKGROUND_OUTLINE
         setBoxCornerRadii(8.dpToPx, 8.dpToPx, 8.dpToPx, 8.dpToPx)
         isExpandedHintEnabled = false
 
         // Edit Text
         editText?.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-        editText?.setPaddingRelative(12, 0, 12, 0)
+        editText?.setPaddingRelative(4, 0, 4, 0)
         editText?.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
         editText?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
