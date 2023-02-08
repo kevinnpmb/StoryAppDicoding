@@ -7,13 +7,15 @@ import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.util.TypedValue
-import android.view.View
 import androidx.core.content.ContextCompat
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.kevin.storyappdicoding.R
 import com.kevin.storyappdicoding.utils.Utilities.dpToPx
 
+
 class EmailTextInputLayout : TextInputLayout {
+    lateinit var mEditText: TextInputEditText
     constructor(context: Context) : super(context) {
         init()
     }
@@ -35,17 +37,19 @@ class EmailTextInputLayout : TextInputLayout {
     }
 
     private fun init() {
-        hint = context.getString(R.string.enter_your, context.getString(R.string.email))
+        hint = context.getString(R.string.enter_your_email)
         boxBackgroundColor = ContextCompat.getColor(context, R.color.white)
         boxBackgroundMode = BOX_BACKGROUND_OUTLINE
         setBoxCornerRadii(8.dpToPx, 8.dpToPx, 8.dpToPx, 8.dpToPx)
         isExpandedHintEnabled = false
-
+        setWillNotDraw(false)
         // Edit Text
-        editText?.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-        editText?.setPaddingRelative(4, 0, 4, 0)
-        editText?.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
-        editText?.addTextChangedListener(object : TextWatcher {
+        mEditText = TextInputEditText(context)
+        val layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        mEditText.layoutParams = layoutParams
+        mEditText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        mEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+        mEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 // Do nothing.
             }
@@ -54,7 +58,7 @@ class EmailTextInputLayout : TextInputLayout {
                 val email = s.toString()
                 error = when {
                     email.isBlank() -> context.getString(R.string.is_empty, context.getString(R.string.email))
-                    isValidEmail(email) -> context.getString(R.string.email_not_valid)
+                    !isValidEmail(email) -> context.getString(R.string.email_not_valid)
                     else -> null
                 }
             }
@@ -63,6 +67,7 @@ class EmailTextInputLayout : TextInputLayout {
                 // Do nothing.
             }
         })
+        addView(mEditText)
     }
 
     fun isValidEmail(email: String): Boolean {
