@@ -13,6 +13,5 @@
         android:layout_centerInParent="true"
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/stapp"
-        android:transitionName="logo_transition" />
+        app:srcCompat="@drawable/stapp" />
 </RelativeLayout>

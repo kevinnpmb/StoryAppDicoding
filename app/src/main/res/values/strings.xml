@@ -10,4 +10,8 @@
     <string name="create_new"><u>Buat Baru</u></string>
     <string name="password">Kata Sandi</string>
     <string name="login">Login</string>
+    <string name="join_us">Bergabunglah dengan\nkami</string>
+    <string name="register">Daftar</string>
+    <string name="name">Nama</string>
+    <string name="enter_your_name">Masukkan Nama Anda</string>
 </resources>
