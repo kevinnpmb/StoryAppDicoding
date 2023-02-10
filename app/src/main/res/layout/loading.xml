@@ -3,12 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="false"
-    tools:background="#CC000000">
+    android:clickable="false">
 
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:indeterminateTint="@color/white" />
+        android:indeterminateTint="@color/grey" />
 </RelativeLayout>

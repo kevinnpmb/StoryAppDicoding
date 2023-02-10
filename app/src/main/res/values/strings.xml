@@ -14,4 +14,11 @@
     <string name="register">Daftar</string>
     <string name="name">Nama</string>
     <string name="enter_your_name">Masukkan Nama Anda</string>
+    <string name="add">Tambah</string>
+    <string name="home">Utama</string>
+    <string name="account">Akun</string>
+    <string name="no_data">Tidak ada data</string>
+    <string name="something_wrong_msg">Terjadi kesalahan, refresh untuk memuat ulang</string>
+    <string name="user_image">Foto User</string>
+    <string name="the_story_of">Cerita dari</string>
 </resources>

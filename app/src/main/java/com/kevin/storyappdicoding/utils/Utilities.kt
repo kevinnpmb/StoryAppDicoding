@@ -5,8 +5,10 @@ import android.content.res.Resources
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.TypedValue
+import android.widget.ImageView
 import com.google.android.material.textfield.TextInputLayout
 import com.kevin.storyappdicoding.R
+import com.squareup.picasso.Picasso
 
 object Utilities {
     val Number.dpToPx
@@ -46,5 +48,13 @@ object Utilities {
             override fun afterTextChanged(p0: Editable?) {}
         }
         editText?.addTextChangedListener(clearTextChangedListener)
+    }
+
+    fun ImageView.setImageResource(url: String) {
+        if (url.isNotBlank()) {
+            Picasso.get().load(url).error(R.drawable.ic_no_images).into(this)
+        } else {
+            setImageResource(R.drawable.ic_no_images)
+        }
     }
 }
