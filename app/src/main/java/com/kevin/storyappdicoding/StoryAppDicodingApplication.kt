@@ -17,14 +17,14 @@ class StoryAppDicodingApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        initializeApplication()
+        setTokenToHeader()
     }
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
     }
 
-    private fun initializeApplication() {
+    fun setTokenToHeader() {
         //load the current access token into all requests
         preferencesHelper.user?.token?.let { token ->
             requestHeaders.token = token

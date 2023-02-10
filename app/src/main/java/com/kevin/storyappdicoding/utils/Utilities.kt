@@ -1,16 +1,31 @@
 package com.kevin.storyappdicoding.utils
 
+import android.app.Application
+import android.content.ContentResolver
 import android.content.Context
 import android.content.res.Resources
+import android.net.Uri
+import android.os.Environment
 import android.text.Editable
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.TextWatcher
+import android.text.style.RelativeSizeSpan
 import android.util.TypedValue
 import android.widget.ImageView
 import com.google.android.material.textfield.TextInputLayout
 import com.kevin.storyappdicoding.R
 import com.squareup.picasso.Picasso
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 object Utilities {
+    private const val FILENAME_FORMAT = "dd-MMM-yyyy"
     val Number.dpToPx
         get() = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
@@ -50,11 +65,49 @@ object Utilities {
         editText?.addTextChangedListener(clearTextChangedListener)
     }
 
-    fun ImageView.setImageResource(url: String) {
-        if (url.isNotBlank()) {
+    fun ImageView.setImageResource(url: String?) {
+        if (!url.isNullOrBlank()) {
             Picasso.get().load(url).error(R.drawable.ic_no_images).into(this)
         } else {
             setImageResource(R.drawable.ic_no_images)
         }
     }
+
+    fun uriToFile(selectedImg: Uri, context: Context): File {
+        val contentResolver: ContentResolver = context.contentResolver
+        val myFile = createCustomTempFile(context)
+
+        val inputStream = contentResolver.openInputStream(selectedImg) as InputStream
+        val outputStream: OutputStream = FileOutputStream(myFile)
+        val buf = ByteArray(1024)
+        var len: Int
+        while (inputStream.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
+        outputStream.close()
+        inputStream.close()
+
+        return myFile
+    }
+
+    val timeStamp: String = SimpleDateFormat(
+        FILENAME_FORMAT,
+        Locale.US
+    ).format(System.currentTimeMillis())
+
+    fun createCustomTempFile(context: Context): File {
+        val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(timeStamp, ".jpg", storageDir)
+    }
+
+    fun createFile(application: Application): File {
+        val mediaDir = application.externalMediaDirs.firstOrNull()?.let {
+            File(it, application.resources.getString(R.string.app_name)).apply { mkdirs() }
+        }
+
+        val outputDirectory = if (
+            mediaDir != null && mediaDir.exists()
+        ) mediaDir else application.filesDir
+
+        return File(outputDirectory, "$timeStamp.jpg")
+    }
+
 }

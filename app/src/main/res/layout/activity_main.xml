@@ -38,7 +38,7 @@
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addTransaction"
+        android:id="@+id/addPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/black"
@@ -48,7 +48,5 @@
         app:maxImageSize="35dp"
         app:fabCustomSize="75dp"
         app:layout_anchor="@id/bottomAppBar" />
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

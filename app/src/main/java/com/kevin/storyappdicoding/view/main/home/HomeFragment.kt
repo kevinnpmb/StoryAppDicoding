@@ -12,14 +12,15 @@ import androidx.fragment.app.viewModels
 import com.kevin.storyappdicoding.adapter.StoriesAdapter
 import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.databinding.FragmentHomeBinding
+import com.kevin.storyappdicoding.view.common.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
     private val adapter = StoriesAdapter {
-
+        DetailBottomDialogFragment.newInstance(it.id).show(parentFragmentManager, "story-detail-${it.id}")
     }
 
     override fun onCreateView(

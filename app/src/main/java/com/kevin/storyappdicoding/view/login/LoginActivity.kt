@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.kevin.storyappdicoding.R
+import com.kevin.storyappdicoding.StoryAppDicodingApplication
 import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.databinding.ActivityLoginBinding
 import com.kevin.storyappdicoding.utils.Utilities.registerValidateIfEmpty
@@ -64,6 +65,7 @@ class LoginActivity : BaseActivity() {
                     is ApiResponse.Success -> {
                         loadingDialog.dismiss()
                         preferencesHelper.user = it.data?.loginResult
+                        (application as StoryAppDicodingApplication).setTokenToHeader()
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         finish()
                     }

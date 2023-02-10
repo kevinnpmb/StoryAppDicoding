@@ -21,4 +21,13 @@
     <string name="something_wrong_msg">Terjadi kesalahan, refresh untuk memuat ulang</string>
     <string name="user_image">Foto User</string>
     <string name="the_story_of">Cerita dari</string>
+    <string name="close">Tutup</string>
+    <string name="take_photo_from_camera">Ambil foto dari kamera</string>
+    <string name="take_photo_from_gallery">Ambil foto dari Galeri</string>
+    <string name="upload">Upload</string>
+    <string name="enter_description">Masukkan Deskripsi</string>
+    <string name="description">Deskripsi</string>
+    <string name="please_set_photo">Mohon pilih foto</string>
+    <string name="add_story_success">Sukses menambahkan cerita</string>
+    <string name="no_permission">Tidak mendapatkan permission.</string>
 </resources>

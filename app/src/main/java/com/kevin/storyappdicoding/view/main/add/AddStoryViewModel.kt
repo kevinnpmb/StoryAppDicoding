@@ -4,21 +4,26 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kevin.storyappdicoding.data.model.ApiResponse
+import com.kevin.storyappdicoding.data.model.BaseResponse
 import com.kevin.storyappdicoding.data.repository.StoryRepository
-import com.kevin.storyappdicoding.data.service.story.response.StoryResponse
+import com.kevin.storyappdicoding.data.service.story.response.StoryDetailResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val storyRepository: StoryRepository) : ViewModel() {
-    val storiesResult = MutableLiveData<ApiResponse<StoryResponse>>()
-    fun getStories() {
+class AddStoryViewModel @Inject constructor(private val storyRepository: StoryRepository) : ViewModel() {
+    var photoFile: File? = null
+    val storyResult = MutableLiveData<ApiResponse<BaseResponse>>()
+    fun addStory(description: String) {
         viewModelScope.launch {
-            storyRepository.stories().flowOn(Dispatchers.IO).collect {
-                storiesResult.postValue(it)
+            photoFile?.let { photoFile ->
+                storyRepository.addStory(photoFile, description).flowOn(Dispatchers.IO).collect {
+                    storyResult.postValue(it)
+                }
             }
         }
     }

@@ -1,31 +1,40 @@
 package com.kevin.storyappdicoding.view.main.home
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.util.Log
+import android.transition.Fade
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.kevin.storyappdicoding.adapter.StoriesAdapter
+import com.kevin.storyappdicoding.R
 import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.databinding.FragmentDetailBottomDialogBinding
-import com.kevin.storyappdicoding.databinding.FragmentHomeBinding
+import com.kevin.storyappdicoding.utils.Utilities.setImageResource
 import com.kevin.storyappdicoding.view.common.BaseBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailBottomDialogFragment : BaseBottomSheetDialogFragment() {
     private lateinit var binding: FragmentDetailBottomDialogBinding
+    private lateinit var storyId: String
     private val viewModel: DetailViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            storyId = it.getString(STORY_ID).toString()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        binding = FragmentDetailBottomDialogBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -33,23 +42,28 @@ class DetailBottomDialogFragment : BaseBottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         initObserver()
         initListener()
-        viewModel.getStories()
+        viewModel.getStory(storyId)
+        playAnimation()
     }
 
     private fun initObserver() {
-        viewModel.storiesResult.observe(viewLifecycleOwner) {
+        viewModel.storyResult.observe(viewLifecycleOwner) {
             binding.apply {
                 loading.root.isVisible = it is ApiResponse.Loading
                 error.root.isVisible = it is ApiResponse.Error
+                background.isVisible = loading.root.isVisible || error.root.isVisible
                 when (it) {
                     is ApiResponse.Loading -> {
-                        rvHome.isVisible = false
+                        nsvDetail.isVisible = false
                     }
                     is ApiResponse.Success -> {
-                        root.isRefreshing = false
+                        nsvDetail.isVisible = true
+                        storyImage.setImageResource(it.data?.story?.photoUrl)
+                        storyDescription.text = it.data?.story?.description
+                        storyName.text = it.data?.story?.name
                     }
                     is ApiResponse.Error -> {
-                        root.isRefreshing = false
+                        nsvDetail.isVisible = false
                         Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_LONG)
                             .show()
                     }
@@ -60,9 +74,20 @@ class DetailBottomDialogFragment : BaseBottomSheetDialogFragment() {
 
     private fun initListener() {
         binding.apply {
-            root.setOnRefreshListener {
-                viewModel.getStories()
+            btnClose.setOnClickListener {
+                dismiss()
             }
+        }
+    }
+
+    private fun playAnimation() {
+        AnimatorSet().apply {
+            playSequentially(
+                ObjectAnimator.ofFloat(binding.storyName, View.ALPHA, 1f).setDuration(500),
+                ObjectAnimator.ofFloat(binding.storyDescription, View.ALPHA, 1f).setDuration(500),
+                ObjectAnimator.ofFloat(binding.btnClose, View.ALPHA, 1f).setDuration(500),
+            )
+            start()
         }
     }
 

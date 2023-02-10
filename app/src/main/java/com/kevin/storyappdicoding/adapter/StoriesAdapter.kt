@@ -13,7 +13,7 @@ import com.kevin.storyappdicoding.data.model.Story
 import com.kevin.storyappdicoding.databinding.StoryItemBinding
 import com.kevin.storyappdicoding.utils.Utilities.setImageResource
 
-class StoriesAdapter(detailCallback: (Story) -> Unit):
+class StoriesAdapter(val detailCallback: (Story) -> Unit):
     ListAdapter<Story, StoriesAdapter.StoryViewHolder>(DiffCallback()) {
     private lateinit var context: Context
 
@@ -23,6 +23,9 @@ class StoriesAdapter(detailCallback: (Story) -> Unit):
             binding.apply {
                 userImage.setImageResource(item.photoUrl)
                 userName.text = item.name
+                root.setOnClickListener {
+                    detailCallback.invoke(item)
+                }
             }
         }
     }

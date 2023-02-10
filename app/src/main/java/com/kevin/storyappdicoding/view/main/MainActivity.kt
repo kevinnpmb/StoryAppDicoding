@@ -8,6 +8,7 @@ import com.kevin.storyappdicoding.R
 import com.kevin.storyappdicoding.adapter.MainViewPagerAdapter
 import com.kevin.storyappdicoding.databinding.ActivityMainBinding
 import com.kevin.storyappdicoding.view.common.BaseActivity
+import com.kevin.storyappdicoding.view.main.add.AddStoryBottomDialogFragment
 import com.kevin.storyappdicoding.view.main.home.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,6 +24,7 @@ class MainActivity : BaseActivity() {
             background = null
         }
         binding.vpHostFragment.adapter = MainViewPagerAdapter(this)
+        binding.vpHostFragment.isUserInputEnabled = false
         initListener()
     }
 
@@ -40,6 +42,10 @@ class MainActivity : BaseActivity() {
                     vpHostFragment.currentItem = it.ordinal
                     return@setOnItemSelectedListener true
                 }?: return@setOnItemSelectedListener false
+            }
+
+            addPhoto.setOnClickListener {
+                AddStoryBottomDialogFragment().show(supportFragmentManager, "add-story-tag")
             }
         }
     }
