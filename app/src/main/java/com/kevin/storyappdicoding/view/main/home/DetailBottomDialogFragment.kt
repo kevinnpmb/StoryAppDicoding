@@ -11,13 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.kevin.storyappdicoding.adapter.StoriesAdapter
 import com.kevin.storyappdicoding.data.model.ApiResponse
+import com.kevin.storyappdicoding.databinding.FragmentDetailBottomDialogBinding
 import com.kevin.storyappdicoding.databinding.FragmentHomeBinding
 import com.kevin.storyappdicoding.view.common.BaseBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailBottomDialogFragment : BaseBottomSheetDialogFragment() {
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var binding: FragmentDetailBottomDialogBinding
     private val viewModel: DetailViewModel by viewModels()
 
     override fun onCreateView(
