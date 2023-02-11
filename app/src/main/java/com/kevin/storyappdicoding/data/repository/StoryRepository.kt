@@ -2,8 +2,6 @@ package com.kevin.storyappdicoding.data.repository
 
 import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.data.model.BaseResponse
-import com.kevin.storyappdicoding.data.service.auth.AuthService
-import com.kevin.storyappdicoding.data.service.auth.response.AuthResponse
 import com.kevin.storyappdicoding.data.service.story.StoryService
 import com.kevin.storyappdicoding.data.service.story.response.StoryDetailResponse
 import com.kevin.storyappdicoding.data.service.story.response.StoryResponse

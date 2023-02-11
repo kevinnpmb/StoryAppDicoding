@@ -8,24 +8,24 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
+        layout="@layout/toolbar" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vpHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
-        android:layout_marginBottom="?attr/actionBarSize"/>
+        android:layout_marginBottom="?attr/actionBarSize" />
 
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="4dp"
         android:layout_gravity="bottom"
-        app:fabCradleRoundedCornerRadius="16dp"
+        android:paddingVertical="4dp"
         app:elevation="12dp"
+        app:fabCradleRoundedCornerRadius="16dp"
         app:labelVisibilityMode="labeled">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -34,7 +34,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="16dp"
             android:background="@android:color/transparent"
-            app:menu="@menu/home_bottom_nav_menu"/>
+            app:menu="@menu/home_bottom_nav_menu" />
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -42,11 +42,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/black"
-        android:src="@drawable/add_photo"
         android:contentDescription="@string/add"
-        app:tint="@android:color/white"
-        app:maxImageSize="35dp"
+        android:src="@drawable/add_photo"
         app:fabCustomSize="75dp"
-        app:layout_anchor="@id/bottomAppBar" />
+        app:layout_anchor="@id/bottomAppBar"
+        app:maxImageSize="35dp"
+        app:tint="@android:color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

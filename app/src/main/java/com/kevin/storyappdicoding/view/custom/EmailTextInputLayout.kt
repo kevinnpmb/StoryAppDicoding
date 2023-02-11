@@ -16,6 +16,7 @@ import com.kevin.storyappdicoding.utils.Utilities.dpToPx
 
 class EmailTextInputLayout : TextInputLayout {
     lateinit var mEditText: TextInputEditText
+
     constructor(context: Context) : super(context) {
         init()
     }
@@ -57,7 +58,10 @@ class EmailTextInputLayout : TextInputLayout {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val email = s.toString()
                 error = when {
-                    email.isBlank() -> context.getString(R.string.is_empty, context.getString(R.string.email))
+                    email.isBlank() -> context.getString(
+                        R.string.is_empty,
+                        context.getString(R.string.email)
+                    )
                     !isValidEmail(email) -> context.getString(R.string.email_not_valid)
                     else -> null
                 }

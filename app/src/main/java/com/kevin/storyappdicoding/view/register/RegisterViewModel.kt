@@ -13,9 +13,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterViewModel @Inject constructor(private val authRepository: AuthRepository) : ViewModel() {
+class RegisterViewModel @Inject constructor(private val authRepository: AuthRepository) :
+    ViewModel() {
     val registerResult = MutableLiveData<ApiResponse<BaseResponse>>()
-    fun registerUser(name:String, email: String, password: String) {
+    fun registerUser(name: String, email: String, password: String) {
         viewModelScope.launch {
             authRepository.registerUser(name, email, password).flowOn(Dispatchers.IO).collect {
                 registerResult.postValue(it)

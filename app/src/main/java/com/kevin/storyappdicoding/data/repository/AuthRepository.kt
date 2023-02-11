@@ -1,6 +1,5 @@
 package com.kevin.storyappdicoding.data.repository
 
-import android.util.Log
 import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.data.model.BaseResponse
 import com.kevin.storyappdicoding.data.service.auth.AuthService
@@ -8,7 +7,6 @@ import com.kevin.storyappdicoding.data.service.auth.response.AuthResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.json.JSONObject
-import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -31,7 +29,11 @@ class AuthRepository @Inject constructor(private val authService: AuthService) {
         }
     }
 
-    suspend fun registerUser(name: String, email: String, password: String): Flow<ApiResponse<BaseResponse>> {
+    suspend fun registerUser(
+        name: String,
+        email: String,
+        password: String
+    ): Flow<ApiResponse<BaseResponse>> {
         return flow {
             try {
                 emit(ApiResponse.Loading)

@@ -7,10 +7,7 @@ import android.content.res.Resources
 import android.net.Uri
 import android.os.Environment
 import android.text.Editable
-import android.text.Spannable
-import android.text.SpannableString
 import android.text.TextWatcher
-import android.text.style.RelativeSizeSpan
 import android.util.TypedValue
 import android.widget.ImageView
 import com.google.android.material.textfield.TextInputLayout
@@ -57,7 +54,10 @@ object Utilities {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                error = if (p0.toString().isBlank()) context.getString(R.string.is_empty, title) else null
+                error = if (p0.toString().isBlank()) context.getString(
+                    R.string.is_empty,
+                    title
+                ) else null
             }
 
             override fun afterTextChanged(p0: Editable?) {}

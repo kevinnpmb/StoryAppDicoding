@@ -3,17 +3,14 @@ package com.kevin.storyappdicoding.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.kevin.storyappdicoding.R
 import com.kevin.storyappdicoding.data.model.Story
 import com.kevin.storyappdicoding.databinding.StoryItemBinding
 import com.kevin.storyappdicoding.utils.Utilities.setImageResource
 
-class StoriesAdapter(val detailCallback: (Story) -> Unit):
+class StoriesAdapter(val detailCallback: (Story) -> Unit) :
     ListAdapter<Story, StoriesAdapter.StoryViewHolder>(DiffCallback()) {
     private lateinit var context: Context
 

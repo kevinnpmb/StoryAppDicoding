@@ -3,14 +3,12 @@ package com.kevin.storyappdicoding.view.main.home
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.transition.Fade
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.kevin.storyappdicoding.R
 import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.databinding.FragmentDetailBottomDialogBinding
 import com.kevin.storyappdicoding.utils.Utilities.setImageResource

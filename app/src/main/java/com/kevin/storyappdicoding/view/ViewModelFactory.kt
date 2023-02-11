@@ -1,6 +1,4 @@
 package com.kevin.storyappdicoding.view
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 
 //class ViewModelFactory(private val pref: UserPreference) : ViewModelProvider.NewInstanceFactory() {
 //

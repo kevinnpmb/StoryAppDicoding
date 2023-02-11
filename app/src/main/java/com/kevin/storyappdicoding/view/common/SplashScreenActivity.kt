@@ -8,7 +8,6 @@ import android.os.Looper
 import androidx.core.app.ActivityOptionsCompat
 import com.kevin.storyappdicoding.databinding.ActivitySplashScreenBinding
 import com.kevin.storyappdicoding.view.login.LoginActivity
-import com.kevin.storyappdicoding.view.register.RegisterActivity
 import com.kevin.storyappdicoding.view.main.MainActivity
 
 @SuppressLint("CustomSplashScreen")
