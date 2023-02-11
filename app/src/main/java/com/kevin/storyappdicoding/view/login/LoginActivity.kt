@@ -12,12 +12,10 @@ import com.kevin.storyappdicoding.R
 import com.kevin.storyappdicoding.StoryAppDicodingApplication
 import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.databinding.ActivityLoginBinding
-import com.kevin.storyappdicoding.utils.Utilities.registerValidateIfEmpty
 import com.kevin.storyappdicoding.utils.Utilities.validate
 import com.kevin.storyappdicoding.view.common.BaseActivity
 import com.kevin.storyappdicoding.view.main.MainActivity
 import com.kevin.storyappdicoding.view.register.RegisterActivity
-import com.kevin.storyappdicoding.view.register.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -29,7 +27,6 @@ class LoginActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.loginPassword.registerValidateIfEmpty(this, getString(R.string.password))
         playAnimation()
         initObserver()
         initListener()
@@ -64,7 +61,9 @@ class LoginActivity : BaseActivity() {
                     }
                     is ApiResponse.Success -> {
                         loadingDialog.dismiss()
-                        preferencesHelper.user = it.data?.loginResult
+                        preferencesHelper.user = it.data?.loginResult?.copy(
+                            email = binding.loginEmail.editText?.text.toString(),
+                        )
                         (application as StoryAppDicodingApplication).setTokenToHeader()
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         finish()

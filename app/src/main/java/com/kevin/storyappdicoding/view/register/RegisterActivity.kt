@@ -22,7 +22,6 @@ class RegisterActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.registerPassword.registerValidateIfEmpty(this, getString(R.string.password))
         binding.registerName.registerValidateIfEmpty(this, getString(R.string.name))
         playAnimation()
         initObserver()
@@ -35,10 +34,19 @@ class RegisterActivity : BaseActivity() {
                 val validationList = mutableListOf<Boolean>().apply {
                     add(registerName.validate(this@RegisterActivity, getString(R.string.name)))
                     add(registerEmail.validate(this@RegisterActivity, getString(R.string.email)))
-                    add(registerPassword.validate(this@RegisterActivity, getString(R.string.password)))
+                    add(
+                        registerPassword.validate(
+                            this@RegisterActivity,
+                            getString(R.string.password)
+                        )
+                    )
                 }
                 if (validationList.all { it }) {
-                    viewModel.registerUser(registerName.editText?.text.toString(), registerEmail.editText?.text.toString(), registerPassword.editText?.text.toString())
+                    viewModel.registerUser(
+                        registerName.editText?.text.toString(),
+                        registerEmail.editText?.text.toString(),
+                        registerPassword.editText?.text.toString()
+                    )
                 }
             }
         }
@@ -53,12 +61,14 @@ class RegisterActivity : BaseActivity() {
                     }
                     is ApiResponse.Success -> {
                         loadingDialog.dismiss()
-                        Toast.makeText(this@RegisterActivity, it.data?.message, Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@RegisterActivity, it.data?.message, Toast.LENGTH_LONG)
+                            .show()
                         finish()
                     }
                     is ApiResponse.Error -> {
                         loadingDialog.dismiss()
-                        Toast.makeText(this@RegisterActivity, it.errorMessage, Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@RegisterActivity, it.errorMessage, Toast.LENGTH_LONG)
+                            .show()
                     }
                 }
             }

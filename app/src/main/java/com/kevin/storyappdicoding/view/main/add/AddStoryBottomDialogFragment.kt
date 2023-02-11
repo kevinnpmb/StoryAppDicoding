@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kevin.storyappdicoding.R
 import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.databinding.FragmentAddBottomDialogBinding
@@ -29,9 +31,24 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
 @AndroidEntryPoint
-class AddStoryBottomDialogFragment : BaseBottomSheetDialogFragment() {
+class AddStoryBottomDialogFragment(private val listener: AddStoryListener) :
+    BaseBottomSheetDialogFragment() {
     private lateinit var binding: FragmentAddBottomDialogBinding
     private val viewModel: AddStoryViewModel by viewModels()
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (!isGranted) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.no_permission),
+                    Toast.LENGTH_SHORT
+                ).show()
+                dismiss()
+            }
+        }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,6 +82,7 @@ class AddStoryBottomDialogFragment : BaseBottomSheetDialogFragment() {
                             Toast.LENGTH_LONG
                         ).show()
                         dismiss()
+                        listener.onStoryAddedSuccessfully()
                     }
                     is ApiResponse.Error -> {
                         baseActivity.loadingDialog.dismiss()
@@ -108,25 +126,6 @@ class AddStoryBottomDialogFragment : BaseBottomSheetDialogFragment() {
 
             gallery.setOnClickListener {
                 startGallery()
-            }
-        }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (!allPermissionsGranted()) {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.no_permission),
-                    Toast.LENGTH_SHORT
-                ).show()
-                baseActivity.finish()
             }
         }
     }
@@ -182,9 +181,43 @@ class AddStoryBottomDialogFragment : BaseBottomSheetDialogFragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (!allPermissionsGranted()) {
+            if (shouldShowRequestPermissionRationale(CAMERA)) {
+                val builder =
+                    MaterialAlertDialogBuilder(
+                        requireContext(),
+                        R.style.MaterialAlertDialog_Rounded
+                    )
+                        .setTitle(R.string.permission_denied)
+                        .setMessage(R.string.permission_denied_msg)
+                        .setIcon(R.drawable.stapp)
+                        .setCancelable(false)
+                        .setPositiveButton(android.R.string.ok) { dialog, _ ->
+                            startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                data = Uri.fromParts("package", baseActivity.packageName, null)
+                            })
+                            dialog.dismiss()
+                            dismiss()
+                        }
+                        .setNegativeButton(android.R.string.cancel) { dialog, _ ->
+                            dialog.dismiss()
+                            dismiss()
+                        }
+
+                builder.create().show()
+            } else {
+                requestPermissionLauncher.launch(CAMERA)
+            }
+        }
+    }
+
+    interface AddStoryListener {
+        fun onStoryAddedSuccessfully()
+    }
 
     companion object {
         private val REQUIRED_PERMISSIONS = arrayOf(CAMERA)
-        private const val REQUEST_CODE_PERMISSIONS = 10
     }
 }

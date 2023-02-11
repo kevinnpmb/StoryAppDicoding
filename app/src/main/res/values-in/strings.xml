@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Stapp</string>
+    <string name="enter_your_email">Masukkan email anda</string>
+    <string name="enter_your_password">Masukkan kata sandi anda</string>
+    <string name="is_empty">%1$s tidak boleh kosong</string>
+    <string name="email">Email</string>
+    <string name="email_not_valid">Email tidak valid</string>
+    <string name="message_login">Hei,\nLogin Sekarang</string>
+    <string name="no_account_message">Tidak Punya akun? /</string>
+    <string name="create_new"><u>Buat Baru</u></string>
+    <string name="password">Kata Sandi</string>
+    <string name="login">Login</string>
+    <string name="join_us">Bergabunglah dengan\nkami</string>
+    <string name="register">Daftar</string>
+    <string name="name">Nama</string>
+    <string name="enter_your_name">Masukkan Nama Anda</string>
+    <string name="add">Tambah</string>
+    <string name="home">Utama</string>
+    <string name="account">Akun</string>
+    <string name="no_data">Tidak ada data</string>
+    <string name="something_wrong_msg">Terjadi kesalahan, refresh untuk memuat ulang</string>
+    <string name="user_image">Foto User</string>
+    <string name="the_story_of">Cerita dari</string>
+    <string name="close">Tutup</string>
+    <string name="take_photo_from_camera">Ambil foto dari kamera</string>
+    <string name="take_photo_from_gallery">Ambil foto dari Galeri</string>
+    <string name="upload">Upload</string>
+    <string name="enter_description">Masukkan Deskripsi</string>
+    <string name="description">Deskripsi</string>
+    <string name="please_set_photo">Mohon pilih foto</string>
+    <string name="add_story_success">Sukses menambahkan cerita</string>
+    <string name="no_permission">Tidak mendapatkan permission.</string>
+    <string name="you_re_connected_with">Anda Terhubung \ndengan akun</string>
+    <string name="logout">Logout</string>
+    <string name="permission_denied">Permission ditolak</string>
+    <string name="permission_denied_msg">Permission telah ditolak sebelumnya, mohon ke pengaturan untuk mengatur izin</string>
+    <string name="password_less_than_eight">Password harus lebih dari 7 karakter</string>
+    <string name="localization">Lokalisasi</string>
+</resources>

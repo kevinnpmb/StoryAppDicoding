@@ -68,28 +68,12 @@
                 android:layout_marginTop="16dp"
                 android:alpha="0" />
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.kevin.storyappdicoding.view.custom.PasswordTextInputLayout
                 android:id="@+id/loginPassword"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:alpha="0"
-                android:hint="@string/enter_your_password"
-                app:boxBackgroundColor="@color/white"
-                app:boxCornerRadiusBottomEnd="8dp"
-                app:boxCornerRadiusBottomStart="8dp"
-                app:boxCornerRadiusTopEnd="8dp"
-                app:boxCornerRadiusTopStart="8dp"
-                app:expandedHintEnabled="false"
-                app:passwordToggleEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:textSize="14sp" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:alpha="0" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogin"

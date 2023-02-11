@@ -1,13 +1,11 @@
 package com.kevin.storyappdicoding.view.main.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.kevin.storyappdicoding.adapter.StoriesAdapter
 import com.kevin.storyappdicoding.data.model.ApiResponse
@@ -18,10 +16,11 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel: HomeViewModel by viewModels()
     private val adapter = StoriesAdapter {
-        DetailBottomDialogFragment.newInstance(it.id).show(parentFragmentManager, "story-detail-${it.id}")
+        DetailBottomDialogFragment.newInstance(it.id)
+            .show(parentFragmentManager, "story-detail-${it.id}")
     }
+    val viewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
