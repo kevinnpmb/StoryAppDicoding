@@ -1,5 +1,6 @@
 package com.kevin.storyappdicoding.view.main.home
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,11 +16,13 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val storyRepository: StoryRepository) :
     ViewModel() {
-    val storiesResult = MutableLiveData<ApiResponse<StoryResponse>>()
+    private val _storiesResult = MutableLiveData<ApiResponse<StoryResponse>>()
+    val storiesResult: LiveData<ApiResponse<StoryResponse>> get() = _storiesResult
+
     fun getStories() {
         viewModelScope.launch {
             storyRepository.stories().flowOn(Dispatchers.IO).collect {
-                storiesResult.postValue(it)
+                _storiesResult.postValue(it)
             }
         }
     }

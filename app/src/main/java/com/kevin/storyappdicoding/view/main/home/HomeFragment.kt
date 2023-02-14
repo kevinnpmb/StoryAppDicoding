@@ -37,7 +37,9 @@ class HomeFragment : BaseFragment() {
         }
         initObserver()
         initListener()
-        viewModel.getStories()
+        if (savedInstanceState == null) {
+            viewModel.getStories()
+        }
     }
 
     private fun initObserver() {

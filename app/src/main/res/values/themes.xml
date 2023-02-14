@@ -15,6 +15,7 @@
         <!-- Customize your theme here. -->
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="colorAccent">@color/black</item>
     </style>
 
     <style name="MaterialAlertDialog.Rounded" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">

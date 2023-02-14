@@ -1,5 +1,6 @@
 package com.kevin.storyappdicoding.view.main.add
 
+import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,6 +18,8 @@ import javax.inject.Inject
 class AddStoryViewModel @Inject constructor(private val storyRepository: StoryRepository) :
     ViewModel() {
     var photoFile: File? = null
+    var location: Location? = null
+    val isShowLocation = MutableLiveData(false)
     val storyResult = MutableLiveData<ApiResponse<BaseResponse>>()
     fun addStory(description: String) {
         viewModelScope.launch {
