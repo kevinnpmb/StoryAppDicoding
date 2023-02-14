@@ -74,7 +74,7 @@ class MainActivity : BaseActivity(), AddStoryBottomDialogFragment.AddStoryListen
     override fun onStoryAddedSuccessfully() {
         binding.vpHostFragment.apply {
             val page = supportFragmentManager.findFragmentByTag("f$currentItem")
-            (page as HomeFragment).viewModel.getStories()
+            (page as HomeFragment).refreshStories()
         }
     }
 
