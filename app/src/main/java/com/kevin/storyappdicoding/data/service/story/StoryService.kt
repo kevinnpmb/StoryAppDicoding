@@ -10,7 +10,11 @@ import retrofit2.http.*
 
 interface StoryService {
     @GET("stories")
-    suspend fun stories(): Response<StoryResponse>
+    suspend fun stories(
+        @Query("page") page: Int? = null,
+        @Query("size") size: Int? = null,
+        @Query("location") location: Int? = null,
+    ): Response<StoryResponse>
 
     @GET("stories/{id}")
     suspend fun storyDetail(

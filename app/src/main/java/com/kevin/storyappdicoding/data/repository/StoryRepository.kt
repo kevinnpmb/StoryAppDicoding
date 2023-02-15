@@ -1,10 +1,17 @@
 package com.kevin.storyappdicoding.data.repository
 
+import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.data.model.BaseResponse
+import com.kevin.storyappdicoding.data.model.Story
 import com.kevin.storyappdicoding.data.service.story.StoryService
 import com.kevin.storyappdicoding.data.service.story.response.StoryDetailResponse
 import com.kevin.storyappdicoding.data.service.story.response.StoryResponse
+import com.kevin.storyappdicoding.data.source.StoryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MediaType.Companion.toMediaType
@@ -19,11 +26,11 @@ import javax.inject.Singleton
 
 @Singleton
 class StoryRepository @Inject constructor(private val storyService: StoryService) {
-    suspend fun stories(): Flow<ApiResponse<StoryResponse>> {
+    suspend fun storiesWithLocation(): Flow<ApiResponse<StoryResponse>> {
         return flow {
             try {
                 emit(ApiResponse.Loading)
-                val response = storyService.stories()
+                val response = storyService.stories(location = 1)
                 if (response.code() == 200) {
                     emit(ApiResponse.Success(response.body()))
                 } else {
@@ -34,6 +41,17 @@ class StoryRepository @Inject constructor(private val storyService: StoryService
                 emit(ApiResponse.Error(ex.message.toString()))
             }
         }
+    }
+
+    fun storiesForList(): Flow<PagingData<Story>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5
+            ),
+            pagingSourceFactory = {
+                StoryPagingSource(storyService)
+            }
+        ).flow
     }
 
     suspend fun storyDetail(id: String): Flow<ApiResponse<StoryDetailResponse>> {

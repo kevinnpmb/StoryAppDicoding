@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/retryButton"
+        android:layout_width="232dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="64dp"
+        android:contentDescription="@string/retry"
+        android:visibility="gone"
+        android:gravity="center"
+        android:paddingVertical="16dp"
+        android:text="@string/retry"
+        app:elevation="0dp"
+        app:icon="@drawable/map"
+        app:iconGravity="textStart"
+        app:iconPadding="16dp"
+        app:iconSize="24dp" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.maps.MapsActivity" />
+</FrameLayout>

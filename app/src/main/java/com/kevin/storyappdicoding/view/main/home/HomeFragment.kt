@@ -1,28 +1,32 @@
 package com.kevin.storyappdicoding.view.main.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.kevin.storyappdicoding.adapter.LoadingStateAdapter
 import com.kevin.storyappdicoding.adapter.StoriesAdapter
-import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.databinding.FragmentHomeBinding
+import com.kevin.storyappdicoding.view.maps.MapsActivity
 import com.kevin.storyappdicoding.view.common.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
     private lateinit var binding: FragmentHomeBinding
-    var scrollToTop: Boolean = false
+    private var scrollToTop: Boolean = false
     private val adapter = StoriesAdapter {
         DetailBottomDialogFragment.newInstance(it.id)
             .show(parentFragmentManager, "story-detail-${it.id}")
     }
-    val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +39,37 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            rvHome.adapter = adapter
+            rvHome.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    root.isEnabled = (rvHome.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0
+                }
+            })
+            rvHome.adapter = adapter.apply {
+                addLoadStateListener { loadStates ->
+                    viewModel.taskListState.value = when (loadStates.source.refresh) {
+                        is LoadState.NotLoading -> {
+                            if (loadStates.append.endOfPaginationReached && itemCount < 1) {
+                                HomeViewModel.TaskListState.EMPTY
+                            } else {
+                                HomeViewModel.TaskListState.PRESENT
+                            }
+                        }
+                        is LoadState.Loading -> {
+                            if (adapter.itemCount == 0) {
+                                HomeViewModel.TaskListState.LOADING
+                            } else {
+                                HomeViewModel.TaskListState.PRESENT
+                            }
+                        }
+                        is LoadState.Error -> HomeViewModel.TaskListState.ERROR
+                    }
+                }
+            }.withLoadStateFooter(
+                footer = LoadingStateAdapter {
+                    adapter.retry()
+                }
+            )
         }
         initObserver()
         initListener()
@@ -51,38 +85,16 @@ class HomeFragment : BaseFragment() {
 
     private fun initObserver() {
         viewModel.storiesResult.observe(viewLifecycleOwner) {
+            adapter.submitData(lifecycle, it)
+        }
+
+        viewModel.taskListState.observe(viewLifecycleOwner) {
             binding.apply {
-                loading.root.isVisible = it is ApiResponse.Loading
-                error.root.isVisible = it is ApiResponse.Error
-                when (it) {
-                    is ApiResponse.Loading -> {
-                        rvHome.isVisible = false
-                    }
-                    is ApiResponse.Success -> {
-                        root.isRefreshing = false
-                        val stories =
-                            it.data?.listStory
-                        rvHome.isVisible = !stories.isNullOrEmpty()
-                        empty.root.isVisible = !rvHome.isVisible
-                        if (!stories.isNullOrEmpty()) {
-                            adapter.submitList(stories) {
-                                if (scrollToTop) {
-                                    (rvHome.layoutManager as LinearLayoutManager).smoothScrollToPosition(
-                                        rvHome,
-                                        null,
-                                        0
-                                    )
-                                    scrollToTop = false
-                                }
-                            }
-                        }
-                    }
-                    is ApiResponse.Error -> {
-                        root.isRefreshing = false
-                        Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_LONG)
-                            .show()
-                    }
-                }
+                root.isRefreshing = false
+                loading.root.isVisible = it == HomeViewModel.TaskListState.LOADING
+                empty.root.isVisible = it == HomeViewModel.TaskListState.EMPTY
+                error.root.isVisible = it == HomeViewModel.TaskListState.ERROR
+                rvHome.isVisible = it == HomeViewModel.TaskListState.PRESENT
             }
         }
     }
@@ -91,6 +103,12 @@ class HomeFragment : BaseFragment() {
         binding.apply {
             root.setOnRefreshListener {
                 viewModel.getStories()
+            }
+
+            showOnMap.setOnClickListener {
+                startActivity(
+                    Intent(requireContext(), MapsActivity::class.java)
+                )
             }
         }
     }

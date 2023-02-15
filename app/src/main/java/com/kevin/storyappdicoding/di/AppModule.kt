@@ -1,6 +1,7 @@
 package com.kevin.storyappdicoding.di
 
 import com.google.gson.Gson
+import com.kevin.storyappdicoding.BuildConfig
 import com.kevin.storyappdicoding.BuildConfig.BASE_URL
 import com.kevin.storyappdicoding.data.model.RequestHeaders
 import com.kevin.storyappdicoding.data.service.auth.AuthService
@@ -34,12 +35,15 @@ class AppModule {
             cipherSuites.add(CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA)
         }
         val spec = listOf(ConnectionSpec.CLEARTEXT, ConnectionSpec.MODERN_TLS)
-        return OkHttpClient.Builder()
+        return OkHttpClient.Builder().apply {
+            if (BuildConfig.DEBUG) {
+                addInterceptor(logging)
+            }
+        }
             .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
             .connectionSpecs(spec)
-            .addInterceptor(logging)
             .addInterceptor(requestInterceptor)
             .build()
     }

@@ -3,6 +3,7 @@ package com.kevin.storyappdicoding.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +12,7 @@ import com.kevin.storyappdicoding.databinding.StoryItemBinding
 import com.kevin.storyappdicoding.utils.Utilities.setImageResource
 
 class StoriesAdapter(val detailCallback: (Story) -> Unit) :
-    ListAdapter<Story, StoriesAdapter.StoryViewHolder>(DiffCallback()) {
+    PagingDataAdapter<Story, StoriesAdapter.StoryViewHolder>(DiffCallback()) {
     private lateinit var context: Context
 
     inner class StoryViewHolder(private val binding: StoryItemBinding) :
@@ -50,6 +51,8 @@ class StoriesAdapter(val detailCallback: (Story) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        getItem(position)?.let { story ->
+            holder.bind(story)
+        }
     }
 }
