@@ -47,7 +47,6 @@ class HomeFragment : BaseFragment() {
                 }
             })
             rvHome.adapter = adapter.apply {
-                stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
                 addLoadStateListener { loadStates ->
                     viewModel.taskListState.value = when (loadStates.source.refresh) {
                         is LoadState.NotLoading -> {
@@ -92,7 +91,7 @@ class HomeFragment : BaseFragment() {
                 Handler(Looper.getMainLooper()).postDelayed({
                     binding.rvHome.smoothScrollToPosition(0)
                     scrollToTop = false
-                }, 300)
+                }, 500)
             }
         }
 

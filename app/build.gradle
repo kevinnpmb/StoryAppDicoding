@@ -34,6 +34,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
     }
 
     buildFeatures {
@@ -42,8 +43,10 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.android.gms:play-services-maps:18.1.0'
     def paging_version = "3.1.1"
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'junit:junit:4.13.2'
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'com.google.android.material:material:1.8.0'
@@ -75,10 +78,16 @@ dependencies {
 
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'jp.wasabeef:picasso-transformations:2.4.0'
 
     // Paging
     implementation "androidx.paging:paging-runtime:$paging_version"
     // alternatively - without Android dependencies for tests
     testImplementation "androidx.paging:paging-common:$paging_version"
+    implementation 'androidx.room:room-ktx:2.5.0'
+    implementation 'androidx.room:room-paging:2.5.0'
+    kapt 'androidx.room:room-compiler:2.5.0'
+
+    // mockito
+    testImplementation 'org.mockito:mockito-core:3.12.4'
+    testImplementation 'org.mockito:mockito-inline:3.12.4'
 }

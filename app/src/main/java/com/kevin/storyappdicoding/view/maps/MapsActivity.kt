@@ -4,10 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
@@ -27,10 +23,8 @@ import com.kevin.storyappdicoding.R
 import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.data.model.Story
 import com.kevin.storyappdicoding.databinding.ActivityMapsBinding
-import com.kevin.storyappdicoding.utils.PicassoMarker
 import com.kevin.storyappdicoding.view.common.BaseActivity
 import com.kevin.storyappdicoding.view.main.home.DetailBottomDialogFragment
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +34,6 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation
 @AndroidEntryPoint
 class MapsActivity : BaseActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
-    private val targets = mutableListOf<PicassoMarker>()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var binding: ActivityMapsBinding
     private val viewModel: MapsViewModel by viewModels()
@@ -79,33 +72,17 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
             binding.apply {
                 retryButton.isVisible = it is ApiResponse.Error
                 if (it is ApiResponse.Success) {
-                    val targets = mutableListOf<Pair<Story, Target>>()
                     it.data?.listStory?.forEach { story ->
                         mMap.addMarker(
                             MarkerOptions().position(
                                 LatLng(
-                                    story.lat.toDouble(),
-                                    story.lon.toDouble()
+                                    story.lat!!.toDouble(),
+                                    story.lon!!.toDouble()
                                 )
                             )
                                 .title(story.name)
-                                .anchor(0.0f, 0.0f)
                         )?.apply {
                             tag = "MARKER_TAG:${story.id}"
-                            val marker = PicassoMarker(this)
-                            targets.add(Pair(story, marker))
-                        }
-                    }
-
-                    targets.forEach { (story, marker) ->
-                        val picasso = Picasso.Builder(this@MapsActivity).build()
-                        if (story.photoUrl.isBlank()) {
-                            picasso.load(R.drawable.no_image_icon).resize(100, 100)
-                                .transform(CropCircleTransformation()).into(marker)
-                        } else {
-                            picasso.load(story.photoUrl).error(R.drawable.no_image_icon)
-                                .placeholder(R.drawable.no_image_icon).resize(100, 100)
-                                .transform(CropCircleTransformation()).into(marker)
                         }
                     }
                 }
