@@ -24,7 +24,7 @@ class AddStoryViewModel @Inject constructor(private val storyRepository: StoryRe
     fun addStory(description: String) {
         viewModelScope.launch {
             photoFile?.let { photoFile ->
-                storyRepository.addStory(photoFile, description).flowOn(Dispatchers.IO).collect {
+                storyRepository.addStory(photoFile, description, location).flowOn(Dispatchers.IO).collect {
                     storyResult.postValue(it)
                 }
             }

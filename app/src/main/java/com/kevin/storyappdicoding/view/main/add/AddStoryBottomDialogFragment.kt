@@ -211,7 +211,7 @@ class AddStoryBottomDialogFragment(private val listener: AddStoryListener) :
                 if (location == null) {
                     Toast.makeText(
                         requireContext(),
-                        getString(R.string.location_not_found),
+                        getString(R.string.your_location_not_found),
                         Toast.LENGTH_SHORT
                     ).show()
                 }

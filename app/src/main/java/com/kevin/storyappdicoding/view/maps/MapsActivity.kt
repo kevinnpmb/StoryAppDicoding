@@ -1,34 +1,63 @@
 package com.kevin.storyappdicoding.view.maps
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.kevin.storyappdicoding.R
 import com.kevin.storyappdicoding.data.model.ApiResponse
+import com.kevin.storyappdicoding.data.model.Story
 import com.kevin.storyappdicoding.databinding.ActivityMapsBinding
+import com.kevin.storyappdicoding.utils.PicassoMarker
+import com.kevin.storyappdicoding.view.common.BaseActivity
+import com.kevin.storyappdicoding.view.main.home.DetailBottomDialogFragment
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
 import dagger.hilt.android.AndroidEntryPoint
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
+
 
 @AndroidEntryPoint
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapsActivity : BaseActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
+    private val targets = mutableListOf<PicassoMarker>()
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var binding: ActivityMapsBinding
     private val viewModel: MapsViewModel by viewModels()
+    private val requestLocationPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            if (isGranted) {
+                getMyLastLocation()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         initObserver()
         initListener()
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -50,6 +79,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             binding.apply {
                 retryButton.isVisible = it is ApiResponse.Error
                 if (it is ApiResponse.Success) {
+                    val targets = mutableListOf<Pair<Story, Target>>()
                     it.data?.listStory?.forEach { story ->
                         mMap.addMarker(
                             MarkerOptions().position(
@@ -57,8 +87,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                     story.lat.toDouble(),
                                     story.lon.toDouble()
                                 )
-                            ).title(story.name)
-                        )
+                            )
+                                .title(story.name)
+                                .anchor(0.0f, 0.0f)
+                        )?.apply {
+                            tag = "MARKER_TAG:${story.id}"
+                            val marker = PicassoMarker(this)
+                            targets.add(Pair(story, marker))
+                        }
+                    }
+
+                    targets.forEach { (story, marker) ->
+                        val picasso = Picasso.Builder(this@MapsActivity).build()
+                        if (story.photoUrl.isBlank()) {
+                            picasso.load(R.drawable.no_image_icon).resize(100, 100)
+                                .transform(CropCircleTransformation()).into(marker)
+                        } else {
+                            picasso.load(story.photoUrl).error(R.drawable.no_image_icon)
+                                .placeholder(R.drawable.no_image_icon).resize(100, 100)
+                                .transform(CropCircleTransformation()).into(marker)
+                        }
                     }
                 }
             }
@@ -75,12 +123,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      * installed Google Play services and returned to the app.
      */
     override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
+        mMap = googleMap.apply {
+            setOnMarkerClickListener {
+                DetailBottomDialogFragment.newInstance(it.tag.toString().substring(11))
+                    .show(supportFragmentManager, "story_detail_tag")
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(it.position, 12.0f))
+                true
+            }
+        }
         viewModel.getStories()
         setMapStyle()
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        getMyLastLocation()
     }
 
     private fun setMapStyle() {
@@ -92,6 +145,41 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         } catch (exception: Resources.NotFoundException) {
             Log.e(TAG, "Can't find style. Error: ", exception)
+        }
+    }
+
+    private fun locationPermissionGranted() =
+        ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+
+    @SuppressLint("MissingPermission")
+    private fun getMyLastLocation() {
+        mMap.isMyLocationEnabled = locationPermissionGranted()
+        if (locationPermissionGranted()) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if (location == null) {
+                    Toast.makeText(
+                        this,
+                        getString(R.string.your_location_not_found),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    mMap.animateCamera(
+                        CameraUpdateFactory.newLatLng(
+                            LatLng(
+                                location.latitude,
+                                location.longitude
+                            )
+                        )
+                    )
+                }
+            }
+        } else {
+            requestLocationPermissionLauncher.launch(
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
         }
     }
 

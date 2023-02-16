@@ -16,7 +16,7 @@ import com.kevin.storyappdicoding.view.common.BaseBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailBottomDialogFragment : BaseBottomSheetDialogFragment() {
+class DetailBottomDialogFragment: BaseBottomSheetDialogFragment() {
     private lateinit var binding: FragmentDetailBottomDialogBinding
     private lateinit var storyId: String
     private val viewModel: DetailViewModel by viewModels()

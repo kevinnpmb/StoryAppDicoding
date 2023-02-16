@@ -2,19 +2,20 @@ package com.kevin.storyappdicoding.view.main.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kevin.storyappdicoding.adapter.LoadingStateAdapter
 import com.kevin.storyappdicoding.adapter.StoriesAdapter
 import com.kevin.storyappdicoding.databinding.FragmentHomeBinding
-import com.kevin.storyappdicoding.view.maps.MapsActivity
 import com.kevin.storyappdicoding.view.common.BaseFragment
+import com.kevin.storyappdicoding.view.maps.MapsActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -42,10 +43,11 @@ class HomeFragment : BaseFragment() {
             rvHome.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
-                    root.isEnabled = (rvHome.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0
+                    root.isEnabled = !rvHome.canScrollVertically(-1) && dy < 0
                 }
             })
             rvHome.adapter = adapter.apply {
+                stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
                 addLoadStateListener { loadStates ->
                     viewModel.taskListState.value = when (loadStates.source.refresh) {
                         is LoadState.NotLoading -> {
@@ -79,13 +81,19 @@ class HomeFragment : BaseFragment() {
     }
 
     fun refreshStories() {
-        viewModel.getStories()
         scrollToTop = true
+        viewModel.getStories()
     }
 
     private fun initObserver() {
         viewModel.storiesResult.observe(viewLifecycleOwner) {
             adapter.submitData(lifecycle, it)
+            if (scrollToTop) {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.rvHome.smoothScrollToPosition(0)
+                    scrollToTop = false
+                }, 300)
+            }
         }
 
         viewModel.taskListState.observe(viewLifecycleOwner) {
