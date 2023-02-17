@@ -7,8 +7,8 @@ import kotlin.collections.ArrayList
 
 object DataDummy {
     fun generateDummyStoryEntity(): List<Story> {
-        val newsList = ArrayList<Story>()
-        for (i in 0..10) {
+        val storyList = mutableListOf<Story>()
+        for (i in 0..100) {
             val news = Story(
                 "story-$i",
                 "Story $i",
@@ -16,8 +16,8 @@ object DataDummy {
                 "https://dicoding-web-img.sgp1.cdn.digitaloceanspaces.com/original/commons/feature-1-kurikulum-global-3.png",
                 SimpleDateFormat("yyyy-MM-dd").format(Date()),
             )
-            newsList.add(news)
+            storyList.add(news)
         }
-        return newsList
+        return storyList
     }
 }

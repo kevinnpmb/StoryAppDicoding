@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.room.Room
 import com.google.gson.Gson
 import com.kevin.storyappdicoding.BuildConfig
-import com.kevin.storyappdicoding.BuildConfig.BASE_URL
 import com.kevin.storyappdicoding.data.model.RequestHeaders
 import com.kevin.storyappdicoding.data.service.auth.AuthService
 import com.kevin.storyappdicoding.data.service.story.StoryService
 import com.kevin.storyappdicoding.database.StoryDatabase
+import com.kevin.storyappdicoding.utils.ApiConfig
 import com.kevin.storyappdicoding.utils.RequestInterceptor
 import dagger.Module
 import dagger.Provides
@@ -54,7 +54,7 @@ class AppModule {
 
     @Provides
     fun provideRetrofit(client: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
+        .baseUrl(ApiConfig.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
         .build()
@@ -67,24 +67,14 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideAuthService(client: OkHttpClient): AuthService {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(AuthService::class.java)
+    fun provideAuthService(retrofit: Retrofit): AuthService {
+        return retrofit.create(AuthService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideStoryService(client: OkHttpClient): StoryService {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(StoryService::class.java)
+    fun provideStoryService(retrofit: Retrofit): StoryService {
+        return retrofit.create(StoryService::class.java)
     }
 
     @Provides
@@ -117,4 +107,8 @@ class AppModule {
     @Singleton
     @Provides
     fun provideCartDao(database: StoryDatabase) = database.storyDao()
+
+    @Singleton
+    @Provides
+    fun provideRemoteKeysDao(database: StoryDatabase) = database.remoteKeysDao()
 }

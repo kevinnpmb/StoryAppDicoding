@@ -21,14 +21,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.kevin.storyappdicoding.R
 import com.kevin.storyappdicoding.data.model.ApiResponse
-import com.kevin.storyappdicoding.data.model.Story
 import com.kevin.storyappdicoding.databinding.ActivityMapsBinding
 import com.kevin.storyappdicoding.view.common.BaseActivity
 import com.kevin.storyappdicoding.view.main.home.DetailBottomDialogFragment
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
 import dagger.hilt.android.AndroidEntryPoint
-import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
 
 @AndroidEntryPoint

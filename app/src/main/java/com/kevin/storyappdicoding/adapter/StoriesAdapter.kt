@@ -27,7 +27,7 @@ class StoriesAdapter(val detailCallback: (Story) -> Unit) :
         }
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<Story>() {
+    class DiffCallback : DiffUtil.ItemCallback<Story>() {
         override fun areItemsTheSame(oldItem: Story, newItem: Story): Boolean {
             return oldItem == newItem
         }

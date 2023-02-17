@@ -2,10 +2,7 @@ package com.kevin.storyappdicoding.data.repository
 
 import android.location.Location
 import androidx.lifecycle.LiveData
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.liveData
+import androidx.paging.*
 import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.data.model.BaseResponse
 import com.kevin.storyappdicoding.data.model.Story
@@ -13,6 +10,7 @@ import com.kevin.storyappdicoding.data.service.story.StoryService
 import com.kevin.storyappdicoding.data.service.story.response.StoryDetailResponse
 import com.kevin.storyappdicoding.data.service.story.response.StoryResponse
 import com.kevin.storyappdicoding.data.source.StoryPagingSource
+import com.kevin.storyappdicoding.database.StoryDatabase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MediaType.Companion.toMediaType
@@ -27,7 +25,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class StoryRepository @Inject constructor(private val storyService: StoryService) {
+class StoryRepository @Inject constructor(private val storyService: StoryService, private val storyDatabase: StoryDatabase) {
     suspend fun storiesWithLocation(): Flow<ApiResponse<StoryResponse>> {
         return flow {
             try {
@@ -45,17 +43,6 @@ class StoryRepository @Inject constructor(private val storyService: StoryService
         }
     }
 
-    fun storiesForList(): Flow<PagingData<Story>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = 5
-            ),
-            pagingSourceFactory = {
-                StoryPagingSource(storyService)
-            }
-        ).flow
-    }
-
     suspend fun storyDetail(id: String): Flow<ApiResponse<StoryDetailResponse>> {
         return flow {
             try {
@@ -71,6 +58,20 @@ class StoryRepository @Inject constructor(private val storyService: StoryService
                 emit(ApiResponse.Error(ex.message.toString()))
             }
         }
+    }
+
+    fun storiesForList(): Flow<PagingData<Story>> {
+        @OptIn(ExperimentalPagingApi::class)
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5
+            ),
+            remoteMediator = StoryRemoteMediator(storyDatabase, storyService),
+            pagingSourceFactory = {
+//                StoryPagingSource(storyService)
+                storyDatabase.storyDao().getAllStory()
+            }
+        ).flow
     }
 
     suspend fun addStory(file: File, description: String, location: Location? = null): Flow<ApiResponse<BaseResponse>> {

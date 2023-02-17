@@ -1,0 +1,9 @@
+{
+  "error": false,
+  "message": "success",
+  "loginResult": {
+    "userId": "user-V95E5YDGNBtBZmgb",
+    "name": "Asdf",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLVY5NUU1WURHTkJ0QlptZ2IiLCJpYXQiOjE2NzY2MjU5NTV9.2n1Uf8FW7Ah-R1IkW5PcH8mjaHKpLgG0fDmBX-srpWY"
+  }
+}
