@@ -18,6 +18,7 @@ android {
         versionCode 1
         versionName "1.0"
 
+        testInstrumentationRunner "com.kevin.storyappdicoding.HiltTestApplication"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -46,6 +47,8 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.test:runner:1.5.2'
+    testImplementation 'junit:junit:4.12'
     def paging_version = "3.1.1"
     testImplementation 'junit:junit:4.13.2'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
@@ -102,4 +105,9 @@ dependencies {
     androidTestImplementation "com.squareup.okhttp3:okhttp-tls:4.9.3"
     //TestCoroutineDispatcher
     debugImplementation "androidx.fragment:fragment-testing:1.5.5" //launchFragmentInContainer
+    debugImplementation "androidx.test:monitor:1.6.1"
+    // For instrumented tests.
+    implementation 'com.google.dagger:hilt-android-testing:2.44'
+    // ...with Kotlin.
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.44'
 }

@@ -3,12 +3,10 @@ package com.kevin.storyappdicoding.utils
 import android.app.Application
 import android.content.ContentResolver
 import android.content.Context
-import android.content.res.Resources
 import android.net.Uri
 import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.TypedValue
 import android.widget.ImageView
 import com.google.android.material.textfield.TextInputLayout
 import com.kevin.storyappdicoding.R
@@ -23,12 +21,6 @@ import java.util.*
 
 object Utilities {
     private const val FILENAME_FORMAT = "dd-MMM-yyyy"
-    val Number.dpToPx
-        get() = TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            this.toFloat(),
-            Resources.getSystem().displayMetrics
-        )
 
     fun TextInputLayout.validate(
         context: Context,

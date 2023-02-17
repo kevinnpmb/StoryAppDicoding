@@ -57,8 +57,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textCursorDrawable="@null"
                     android:inputType="text"
+                    android:textCursorDrawable="@null"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 

@@ -37,4 +37,11 @@
     <string name="permission_denied_msg">Permission telah ditolak sebelumnya, mohon ke pengaturan untuk mengatur izin</string>
     <string name="password_less_than_eight">Password harus lebih dari 7 karakter</string>
     <string name="localization">Lokalisasi</string>
+    <string name="show_location">Perlihatkan Lokasi</string>
+    <string name="your_location_not_found">Lokasimu tidak ditemukan. Coba lagi</string>
+    <string name="choose_a_picture">Pilih gambar</string>
+    <string name="no_location_registered">Tidak ada lokasi teregistrasi</string>
+    <string name="retry"><u>Coba Lagi</u></string>
+    <string name="show_on_map">Perlihatkan di map</string>
+    <string name="by_map">Oleh Map</string>
 </resources>

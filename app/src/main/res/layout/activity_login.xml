@@ -87,5 +87,17 @@
                 android:text="@string/login"
                 app:cornerRadius="8dp" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="#FF0000"
+            android:visibility="gone"
+            tools:text="error" />
     </RelativeLayout>
 </androidx.core.widget.NestedScrollView>

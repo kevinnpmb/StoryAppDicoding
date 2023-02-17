@@ -2,17 +2,20 @@ package com.kevin.storyappdicoding.view.login
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.transition.Fade
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
+import com.google.android.material.textfield.TextInputLayout
 import com.kevin.storyappdicoding.R
 import com.kevin.storyappdicoding.StoryAppDicodingApplication
 import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.databinding.ActivityLoginBinding
-import com.kevin.storyappdicoding.utils.Utilities.validate
 import com.kevin.storyappdicoding.view.common.BaseActivity
 import com.kevin.storyappdicoding.view.main.MainActivity
 import com.kevin.storyappdicoding.view.register.RegisterActivity
@@ -70,8 +73,13 @@ class LoginActivity : BaseActivity() {
                     }
                     is ApiResponse.Error -> {
                         loadingDialog.dismiss()
-                        Toast.makeText(this@LoginActivity, it.errorMessage, Toast.LENGTH_LONG)
-                            .show()
+                        binding.tvError.apply {
+                            isVisible = true
+                            text = it.errorMessage
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                isVisible = false
+                            }, 3000)
+                        }
                     }
                 }
             }
@@ -94,6 +102,25 @@ class LoginActivity : BaseActivity() {
                 ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(500),
             )
             start()
+        }
+    }
+
+    private fun TextInputLayout.validate(
+        context: Context,
+        title: String,
+    ): Boolean {
+        return when {
+            editText?.text.isNullOrEmpty() -> {
+                error = context.getString(R.string.is_empty, title)
+                false
+            }
+            !error.isNullOrBlank() -> {
+                false
+            }
+            else -> {
+                error = null
+                true
+            }
         }
     }
 }

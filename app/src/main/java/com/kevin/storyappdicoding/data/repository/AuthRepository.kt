@@ -1,22 +1,23 @@
 package com.kevin.storyappdicoding.data.repository
 
+import com.kevin.storyappdicoding.data.ApiConfig
 import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.data.model.BaseResponse
-import com.kevin.storyappdicoding.data.service.auth.AuthService
 import com.kevin.storyappdicoding.data.service.auth.response.AuthResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import okhttp3.OkHttpClient
 import org.json.JSONObject
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AuthRepository @Inject constructor(private val authService: AuthService) {
+class AuthRepository @Inject constructor(private val client: OkHttpClient) {
     suspend fun loginUser(email: String, password: String): Flow<ApiResponse<AuthResponse>> {
         return flow {
             try {
                 emit(ApiResponse.Loading)
-                val response = authService.loginUser(email, password)
+                val response = ApiConfig.authService(client).loginUser(email, password)
                 if (response.code() == 200) {
                     emit(ApiResponse.Success(response.body()))
                 } else {
@@ -37,7 +38,7 @@ class AuthRepository @Inject constructor(private val authService: AuthService) {
         return flow {
             try {
                 emit(ApiResponse.Loading)
-                val response = authService.registerUser(name, email, password)
+                val response = ApiConfig.authService(client).registerUser(name, email, password)
                 if (response.code() == 201) {
                     emit(ApiResponse.Success(response.body()))
                 } else if (response.code() == 400) {

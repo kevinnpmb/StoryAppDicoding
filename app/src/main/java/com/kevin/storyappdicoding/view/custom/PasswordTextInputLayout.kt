@@ -2,6 +2,7 @@ package com.kevin.storyappdicoding.view.custom
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.graphics.Canvas
 import android.graphics.Color
 import android.text.Editable
@@ -13,7 +14,6 @@ import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.kevin.storyappdicoding.R
-import com.kevin.storyappdicoding.utils.Utilities.dpToPx
 
 
 class PasswordTextInputLayout : TextInputLayout {
@@ -87,4 +87,10 @@ class PasswordTextInputLayout : TextInputLayout {
     }
 
     fun isValidPassword(password: String) = password.length >= 8
+    private val Number.dpToPx
+        get() = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            this.toFloat(),
+            Resources.getSystem().displayMetrics
+        )
 }

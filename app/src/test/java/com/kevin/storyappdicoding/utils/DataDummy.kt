@@ -3,7 +3,6 @@ package com.kevin.storyappdicoding.utils
 import com.kevin.storyappdicoding.data.model.Story
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 object DataDummy {
     fun generateDummyStoryEntity(): List<Story> {

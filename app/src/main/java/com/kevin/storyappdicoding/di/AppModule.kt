@@ -5,10 +5,7 @@ import androidx.room.Room
 import com.google.gson.Gson
 import com.kevin.storyappdicoding.BuildConfig
 import com.kevin.storyappdicoding.data.model.RequestHeaders
-import com.kevin.storyappdicoding.data.service.auth.AuthService
-import com.kevin.storyappdicoding.data.service.story.StoryService
 import com.kevin.storyappdicoding.database.StoryDatabase
-import com.kevin.storyappdicoding.utils.ApiConfig
 import com.kevin.storyappdicoding.utils.RequestInterceptor
 import dagger.Module
 import dagger.Provides
@@ -19,8 +16,6 @@ import okhttp3.CipherSuite
 import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -53,28 +48,9 @@ class AppModule {
     }
 
     @Provides
-    fun provideRetrofit(client: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl(ApiConfig.BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .client(client)
-        .build()
-
-    @Provides
     @Singleton
     fun provideRequestHeader(): RequestHeaders {
         return RequestHeaders(language = "application/json")
-    }
-
-    @Provides
-    @Singleton
-    fun provideAuthService(retrofit: Retrofit): AuthService {
-        return retrofit.create(AuthService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideStoryService(retrofit: Retrofit): StoryService {
-        return retrofit.create(StoryService::class.java)
     }
 
     @Provides
@@ -96,6 +72,7 @@ class AppModule {
     fun provideGson(): Gson {
         return Gson()
     }
+
     @Provides
     @Singleton
     fun provideStoryDatabase(@ApplicationContext appContext: Context) = Room.databaseBuilder(
