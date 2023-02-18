@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.data.model.BaseResponse
 import com.kevin.storyappdicoding.data.repository.StoryRepository
+import com.kevin.storyappdicoding.utils.Utilities
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
@@ -24,6 +25,7 @@ class AddStoryViewModel @Inject constructor(private val storyRepository: StoryRe
     fun addStory(description: String) {
         viewModelScope.launch {
             photoFile?.let { photoFile ->
+                Utilities.reduceFileImage(photoFile)
                 storyRepository.addStory(photoFile, description, location).flowOn(Dispatchers.IO)
                     .collect {
                         storyResult.postValue(it)
