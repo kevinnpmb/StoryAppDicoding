@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -26,10 +24,14 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kevin.storyappdicoding.R
 import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.databinding.FragmentAddBottomDialogBinding
-import com.kevin.storyappdicoding.utils.Utilities.createCustomTempFile
 import com.kevin.storyappdicoding.utils.Utilities.registerValidateIfEmpty
+import com.kevin.storyappdicoding.utils.Utilities.rotateBitmap
+import com.kevin.storyappdicoding.utils.Utilities.serializable
 import com.kevin.storyappdicoding.utils.Utilities.uriToFile
 import com.kevin.storyappdicoding.utils.Utilities.validate
+import com.kevin.storyappdicoding.view.camera.CameraActivity
+import com.kevin.storyappdicoding.view.camera.CameraActivity.Companion.IS_BACK_CAMERA
+import com.kevin.storyappdicoding.view.camera.CameraActivity.Companion.PICTURE
 import com.kevin.storyappdicoding.view.common.BaseBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -39,7 +41,6 @@ class AddStoryBottomDialogFragment(private val listener: AddStoryListener) :
     BaseBottomSheetDialogFragment() {
     private lateinit var binding: FragmentAddBottomDialogBinding
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var currentPhotoPath: String
     private val viewModel: AddStoryViewModel by viewModels()
     private val requestLocationPermissionLauncher =
         registerForActivityResult(
@@ -68,13 +69,18 @@ class AddStoryBottomDialogFragment(private val listener: AddStoryListener) :
             }
         }
 
-    private val launcherIntentCamera = registerForActivityResult(
+    private val launcherIntentCameraX = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
-        if (it.resultCode == RESULT_OK) {
-            val myFile = File(currentPhotoPath)
-            val result = BitmapFactory.decodeFile(myFile.path)
+        if (it.resultCode == CAMERA_X_RESULT) {
+            val myFile = it.data?.serializable<File>(PICTURE)
+            val isBackCamera = it.data?.getBooleanExtra(IS_BACK_CAMERA, true) as Boolean
+            viewModel.isBackCamera = isBackCamera
             viewModel.photoFile = myFile
+            val result = rotateBitmap(
+                BitmapFactory.decodeFile(viewModel.photoFile?.path),
+                isBackCamera
+            )
             binding.storyImage.setImageBitmap(result)
         }
     }
@@ -85,6 +91,7 @@ class AddStoryBottomDialogFragment(private val listener: AddStoryListener) :
         if (result.resultCode == RESULT_OK) {
             val selectedImg: Uri = result.data?.data as Uri
             val myFile = uriToFile(selectedImg, requireContext())
+            viewModel.isBackCamera = null
             viewModel.photoFile = myFile
             binding.storyImage.setImageURI(selectedImg)
         }
@@ -224,19 +231,8 @@ class AddStoryBottomDialogFragment(private val listener: AddStoryListener) :
     }
 
     private fun startTakePhoto() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        intent.resolveActivity(baseActivity.packageManager)
-
-        createCustomTempFile(baseActivity.application).also {
-            val photoURI: Uri = FileProvider.getUriForFile(
-                requireContext(),
-                "com.kevin.storyappdicoding",
-                it
-            )
-            currentPhotoPath = it.absolutePath
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-            launcherIntentCamera.launch(intent)
-        }
+        val intent = Intent(requireContext(), CameraActivity::class.java)
+        launcherIntentCameraX.launch(intent)
     }
 
     private fun startGallery() {
@@ -290,6 +286,7 @@ class AddStoryBottomDialogFragment(private val listener: AddStoryListener) :
     }
 
     companion object {
+        const val CAMERA_X_RESULT = 200
         private val REQUIRED_LOCATION_PERMISSIONS =
             arrayOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION)
     }

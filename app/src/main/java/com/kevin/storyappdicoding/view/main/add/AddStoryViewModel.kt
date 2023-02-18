@@ -20,12 +20,17 @@ class AddStoryViewModel @Inject constructor(private val storyRepository: StoryRe
     ViewModel() {
     var photoFile: File? = null
     var location: Location? = null
+    var isBackCamera: Boolean? = null
     val isShowLocation = MutableLiveData(false)
     val storyResult = MutableLiveData<ApiResponse<BaseResponse>>()
     fun addStory(description: String) {
         viewModelScope.launch {
             photoFile?.let { photoFile ->
-                Utilities.reduceFileImage(photoFile)
+                isBackCamera?.let { isBackCamera ->
+                    Utilities.reduceFileImageCameraX(photoFile, isBackCamera)
+                } ?: run {
+                    Utilities.reduceFileImage(photoFile)
+                }
                 storyRepository.addStory(photoFile, description, location).flowOn(Dispatchers.IO)
                     .collect {
                         storyResult.postValue(it)
