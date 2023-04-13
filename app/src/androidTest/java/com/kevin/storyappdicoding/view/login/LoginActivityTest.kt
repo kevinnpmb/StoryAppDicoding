@@ -13,7 +13,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.kevin.storyappdicoding.R
-import com.kevin.storyappdicoding.data.ApiConfig
+import com.kevin.storyappdicoding.core.data.ApiConfig
 import com.kevin.storyappdicoding.utils.EspressoIdlingResource
 import com.kevin.storyappdicoding.utils.JsonConverter
 import com.kevin.storyappdicoding.utils.Utilities.getResourceString
@@ -46,7 +46,7 @@ class LoginActivityTest {
             decorView = activity.window.decorView
         }
         mockWebServer.start(8080)
-        ApiConfig.BASE_URL = "http://127.0.0.1:8080/"
+        com.kevin.storyappdicoding.core.data.ApiConfig.BASE_URL = "http://127.0.0.1:8080/"
         IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
     }
 
