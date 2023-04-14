@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kevin.storyappdicoding.core.adapter.LoadingStateAdapter
 import com.kevin.storyappdicoding.adapter.StoriesAdapter
 import com.kevin.storyappdicoding.databinding.FragmentHomeBinding
-import com.kevin.storyappdicoding.view.common.BaseFragment
+import com.kevin.storyappdicoding.core.view.common.BaseFragment
 import com.kevin.storyappdicoding.view.maps.MapsActivity
 import dagger.hilt.android.AndroidEntryPoint
 

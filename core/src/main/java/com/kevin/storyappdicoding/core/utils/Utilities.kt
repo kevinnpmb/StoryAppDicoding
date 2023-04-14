@@ -14,7 +14,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.ImageView
 import com.google.android.material.textfield.TextInputLayout
-import com.kevin.storyappdicoding.R
+import com.kevin.storyappdicoding.core.R
 import com.squareup.picasso.Picasso
 import java.io.*
 import java.text.SimpleDateFormat

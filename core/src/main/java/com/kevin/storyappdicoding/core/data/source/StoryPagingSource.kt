@@ -2,8 +2,8 @@ package com.kevin.storyappdicoding.core.data.source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.kevin.storyappdicoding.data.model.Story
-import com.kevin.storyappdicoding.data.service.story.StoryService
+import com.kevin.storyappdicoding.core.data.model.Story
+import com.kevin.storyappdicoding.core.data.service.story.StoryService
 import org.json.JSONObject
 
 class StoryPagingSource(private val storyService: StoryService) : PagingSource<Int, Story>() {

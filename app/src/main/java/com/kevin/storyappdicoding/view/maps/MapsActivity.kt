@@ -22,7 +22,7 @@ import com.google.android.gms.maps.model.*
 import com.kevin.storyappdicoding.R
 import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.databinding.ActivityMapsBinding
-import com.kevin.storyappdicoding.view.common.BaseActivity
+import com.kevin.storyappdicoding.core.view.common.BaseActivity
 import com.kevin.storyappdicoding.view.main.home.DetailBottomDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 

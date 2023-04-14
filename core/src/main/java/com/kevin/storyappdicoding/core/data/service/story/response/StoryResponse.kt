@@ -1,7 +1,7 @@
 package com.kevin.storyappdicoding.core.data.service.story.response
 
 import com.google.gson.annotations.SerializedName
-import com.kevin.storyappdicoding.data.model.Story
+import com.kevin.storyappdicoding.core.data.model.Story
 
 data class StoryResponse(
     @SerializedName("error")

@@ -1,4 +1,4 @@
-package com.kevin.storyappdicoding.view.camera
+package com.kevin.storyappdicoding.camera
 
 import android.content.Intent
 import android.os.Build
@@ -6,17 +6,14 @@ import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import com.kevin.storyappdicoding.R
 import com.kevin.storyappdicoding.databinding.ActivityCameraBinding
-import com.kevin.storyappdicoding.utils.Utilities.createFile
-import com.kevin.storyappdicoding.view.main.add.AddStoryBottomDialogFragment.Companion.CAMERA_X_RESULT
+import com.kevin.storyappdicoding.core.utils.Utilities.createFile
 
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding

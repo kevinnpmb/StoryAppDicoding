@@ -5,10 +5,10 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.kevin.storyappdicoding.data.model.Story
-import com.kevin.storyappdicoding.data.service.story.StoryService
-import com.kevin.storyappdicoding.database.StoryDatabase
-import com.kevin.storyappdicoding.database.model.RemoteKeys
+import com.kevin.storyappdicoding.core.data.model.Story
+import com.kevin.storyappdicoding.core.data.service.story.StoryService
+import com.kevin.storyappdicoding.core.database.StoryDatabase
+import com.kevin.storyappdicoding.core.database.model.RemoteKeys
 
 @OptIn(ExperimentalPagingApi::class)
 class StoryRemoteMediator(

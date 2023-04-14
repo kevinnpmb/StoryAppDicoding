@@ -2,13 +2,12 @@ package com.kevin.storyappdicoding.core.data.repository
 
 import android.location.Location
 import androidx.paging.*
-import com.kevin.storyappdicoding.core.data.ApiConfig
-import com.kevin.storyappdicoding.data.model.ApiResponse
-import com.kevin.storyappdicoding.data.model.BaseResponse
-import com.kevin.storyappdicoding.data.model.Story
-import com.kevin.storyappdicoding.data.service.story.response.StoryDetailResponse
-import com.kevin.storyappdicoding.data.service.story.response.StoryResponse
-import com.kevin.storyappdicoding.database.StoryDatabase
+import com.kevin.storyappdicoding.core.data.model.ApiResponse
+import com.kevin.storyappdicoding.core.data.model.BaseResponse
+import com.kevin.storyappdicoding.core.data.model.Story
+import com.kevin.storyappdicoding.core.data.service.story.response.StoryDetailResponse
+import com.kevin.storyappdicoding.core.data.service.story.response.StoryResponse
+import com.kevin.storyappdicoding.core.database.StoryDatabase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MediaType.Companion.toMediaType

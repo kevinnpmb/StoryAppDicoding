@@ -1,10 +1,10 @@
-package com.kevin.storyappdicoding.view.common
+package com.kevin.storyappdicoding.core.view.common
 
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.kevin.storyappdicoding.R
-import com.kevin.storyappdicoding.utils.PreferencesHelper
+import com.kevin.storyappdicoding.core.R
+import com.kevin.storyappdicoding.core.utils.PreferencesHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

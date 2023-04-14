@@ -4,10 +4,10 @@ import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kevin.storyappdicoding.data.model.ApiResponse
-import com.kevin.storyappdicoding.data.model.BaseResponse
-import com.kevin.storyappdicoding.data.repository.StoryRepository
-import com.kevin.storyappdicoding.utils.Utilities
+import com.kevin.storyappdicoding.core.data.model.ApiResponse
+import com.kevin.storyappdicoding.core.data.model.BaseResponse
+import com.kevin.storyappdicoding.core.data.repository.StoryRepository
+import com.kevin.storyappdicoding.core.utils.Utilities
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn

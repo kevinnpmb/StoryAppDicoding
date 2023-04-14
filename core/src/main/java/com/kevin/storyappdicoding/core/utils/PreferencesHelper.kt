@@ -4,7 +4,7 @@ package com.kevin.storyappdicoding.core.utils
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
-import com.kevin.storyappdicoding.data.model.User
+import com.kevin.storyappdicoding.core.data.model.User
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton

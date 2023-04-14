@@ -3,10 +3,10 @@ package com.kevin.storyappdicoding.core.di
 import android.content.Context
 import androidx.room.Room
 import com.google.gson.Gson
-import com.kevin.storyappdicoding.BuildConfig
-import com.kevin.storyappdicoding.data.model.RequestHeaders
-import com.kevin.storyappdicoding.database.StoryDatabase
-import com.kevin.storyappdicoding.utils.RequestInterceptor
+import com.kevin.storyappdicoding.core.BuildConfig
+import com.kevin.storyappdicoding.core.data.model.RequestHeaders
+import com.kevin.storyappdicoding.core.database.StoryDatabase
+import com.kevin.storyappdicoding.core.utils.RequestInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

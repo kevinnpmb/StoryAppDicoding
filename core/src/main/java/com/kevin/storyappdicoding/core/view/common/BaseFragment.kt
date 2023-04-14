@@ -1,4 +1,4 @@
-package com.kevin.storyappdicoding.view.common
+package com.kevin.storyappdicoding.core.view.common
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

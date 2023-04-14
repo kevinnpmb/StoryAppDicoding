@@ -1,6 +1,6 @@
 package com.kevin.storyappdicoding.core.utils
 
-import com.kevin.storyappdicoding.data.model.RequestHeaders
+import com.kevin.storyappdicoding.core.data.model.RequestHeaders
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

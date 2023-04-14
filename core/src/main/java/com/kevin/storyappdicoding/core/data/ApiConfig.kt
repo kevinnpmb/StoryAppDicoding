@@ -1,7 +1,7 @@
 package com.kevin.storyappdicoding.core.data
 
-import com.kevin.storyappdicoding.data.service.auth.AuthService
-import com.kevin.storyappdicoding.data.service.story.StoryService
+import com.kevin.storyappdicoding.core.data.service.auth.AuthService
+import com.kevin.storyappdicoding.core.data.service.story.StoryService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,8 +16,8 @@ object ApiConfig {
         .build()
 
     fun authService(client: OkHttpClient): AuthService =
-        com.kevin.storyappdicoding.core.data.ApiConfig.retrofit(client).create(AuthService::class.java)
+        retrofit(client).create(AuthService::class.java)
 
     fun storyService(client: OkHttpClient): StoryService =
-        com.kevin.storyappdicoding.core.data.ApiConfig.retrofit(client).create(StoryService::class.java)
+        retrofit(client).create(StoryService::class.java)
 }

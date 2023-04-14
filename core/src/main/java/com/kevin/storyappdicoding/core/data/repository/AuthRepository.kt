@@ -1,9 +1,8 @@
 package com.kevin.storyappdicoding.core.data.repository
 
-import com.kevin.storyappdicoding.core.data.ApiConfig
-import com.kevin.storyappdicoding.data.model.ApiResponse
-import com.kevin.storyappdicoding.data.model.BaseResponse
-import com.kevin.storyappdicoding.data.service.auth.response.AuthResponse
+import com.kevin.storyappdicoding.core.data.model.ApiResponse
+import com.kevin.storyappdicoding.core.data.model.BaseResponse
+import com.kevin.storyappdicoding.core.data.service.auth.response.AuthResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.OkHttpClient

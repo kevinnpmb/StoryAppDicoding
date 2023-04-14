@@ -62,14 +62,14 @@
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.kevin.storyappdicoding.view.custom.EmailTextInputLayout
+            <com.kevin.storyappdicoding.core.view.custom.EmailTextInputLayout
                 android:id="@+id/registerEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:alpha="0" />
 
-            <com.kevin.storyappdicoding.view.custom.PasswordTextInputLayout
+            <com.kevin.storyappdicoding.core.view.custom.PasswordTextInputLayout
                 android:id="@+id/registerPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

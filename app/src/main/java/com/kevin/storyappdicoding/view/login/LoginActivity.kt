@@ -16,7 +16,7 @@ import com.kevin.storyappdicoding.R
 import com.kevin.storyappdicoding.StoryAppDicodingApplication
 import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.databinding.ActivityLoginBinding
-import com.kevin.storyappdicoding.view.common.BaseActivity
+import com.kevin.storyappdicoding.core.view.common.BaseActivity
 import com.kevin.storyappdicoding.view.main.MainActivity
 import com.kevin.storyappdicoding.view.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint

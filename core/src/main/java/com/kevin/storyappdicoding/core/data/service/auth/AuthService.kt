@@ -1,7 +1,7 @@
 package com.kevin.storyappdicoding.core.data.service.auth
 
-import com.kevin.storyappdicoding.data.model.BaseResponse
-import com.kevin.storyappdicoding.data.service.auth.response.AuthResponse
+import com.kevin.storyappdicoding.core.data.model.BaseResponse
+import com.kevin.storyappdicoding.core.data.service.auth.response.AuthResponse
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

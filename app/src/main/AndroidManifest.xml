@@ -38,7 +38,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".view.camera.CameraActivity"
+            android:name=".camera.CameraActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.databinding.FragmentDetailBottomDialogBinding
 import com.kevin.storyappdicoding.utils.Utilities.setImageResource
-import com.kevin.storyappdicoding.view.common.BaseBottomSheetDialogFragment
+import com.kevin.storyappdicoding.core.view.common.BaseBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -46,8 +46,10 @@ android {
     testOptions {
         animationsDisabled = true
     }
+    dynamicFeatures = [':camera', ':login']
 }
 
 dependencies {
     implementation project(":core")
+    implementation project(":camera")
 }

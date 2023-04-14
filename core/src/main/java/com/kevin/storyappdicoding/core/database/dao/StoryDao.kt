@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.kevin.storyappdicoding.data.model.Story
+import com.kevin.storyappdicoding.core.data.model.Story
 
 @Dao
 interface StoryDao {

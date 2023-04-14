@@ -1,8 +1,8 @@
 package com.kevin.storyappdicoding.core.data.service.story
 
-import com.kevin.storyappdicoding.data.model.BaseResponse
-import com.kevin.storyappdicoding.data.service.story.response.StoryDetailResponse
-import com.kevin.storyappdicoding.data.service.story.response.StoryResponse
+import com.kevin.storyappdicoding.core.data.model.BaseResponse
+import com.kevin.storyappdicoding.core.data.service.story.response.StoryDetailResponse
+import com.kevin.storyappdicoding.core.data.service.story.response.StoryResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response

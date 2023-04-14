@@ -1,10 +1,10 @@
-package com.kevin.storyappdicoding.view.common
+package com.kevin.storyappdicoding.core.view.common
 
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.kevin.storyappdicoding.R
+import com.kevin.storyappdicoding.core.R
 
 open class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
     lateinit var baseActivity: BaseActivity

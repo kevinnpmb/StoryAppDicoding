@@ -9,11 +9,11 @@ apply from: '../shared_dependencies.gradle'
 
 android {
     namespace 'com.kevin.storyappdicoding.core'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         minSdk 21
-        targetSdk 32
+        targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -59,4 +59,8 @@ dependencies {
     implementation 'androidx.room:room-ktx:2.5.0'
     implementation 'androidx.room:room-paging:2.5.0'
     kapt 'androidx.room:room-compiler:2.5.0'
+
+    // Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 }

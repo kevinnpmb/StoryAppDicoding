@@ -9,8 +9,8 @@ import androidx.annotation.IdRes
 import androidx.viewpager2.widget.ViewPager2
 import com.kevin.storyappdicoding.R
 import com.kevin.storyappdicoding.adapter.MainViewPagerAdapter
+import com.kevin.storyappdicoding.core.view.common.BaseActivity
 import com.kevin.storyappdicoding.databinding.ActivityMainBinding
-import com.kevin.storyappdicoding.view.common.BaseActivity
 import com.kevin.storyappdicoding.view.main.account.AccountFragment
 import com.kevin.storyappdicoding.view.main.add.AddStoryBottomDialogFragment
 import com.kevin.storyappdicoding.view.main.home.HomeFragment

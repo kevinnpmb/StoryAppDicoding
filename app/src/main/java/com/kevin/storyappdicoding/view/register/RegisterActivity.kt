@@ -11,7 +11,7 @@ import com.kevin.storyappdicoding.data.model.ApiResponse
 import com.kevin.storyappdicoding.databinding.ActivityRegisterBinding
 import com.kevin.storyappdicoding.utils.Utilities.registerValidateIfEmpty
 import com.kevin.storyappdicoding.utils.Utilities.validate
-import com.kevin.storyappdicoding.view.common.BaseActivity
+import com.kevin.storyappdicoding.core.view.common.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

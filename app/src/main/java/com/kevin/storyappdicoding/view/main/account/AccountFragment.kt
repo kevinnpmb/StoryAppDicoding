@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.kevin.storyappdicoding.databinding.FragmentAccountBinding
 import com.kevin.storyappdicoding.utils.PreferencesHelper
-import com.kevin.storyappdicoding.view.common.BaseFragment
+import com.kevin.storyappdicoding.core.view.common.BaseFragment
 import com.kevin.storyappdicoding.view.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

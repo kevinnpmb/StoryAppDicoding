@@ -1,4 +1,4 @@
-package com.kevin.storyappdicoding.view.custom
+package com.kevin.storyappdicoding.core.view.custom
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -10,13 +10,12 @@ import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.util.TypedValue
-import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.kevin.storyappdicoding.R
 
 
-class PasswordTextInputLayout : TextInputLayout {
+class EmailTextInputLayout : TextInputLayout {
     lateinit var mEditText: TextInputEditText
 
     constructor(context: Context) : super(context) {
@@ -28,9 +27,7 @@ class PasswordTextInputLayout : TextInputLayout {
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
+        context, attrs, defStyleAttr
     ) {
         init()
     }
@@ -40,10 +37,9 @@ class PasswordTextInputLayout : TextInputLayout {
     }
 
     private fun init() {
-        hint = context.getString(R.string.enter_your_password)
+        hint = context.getString(R.string.enter_your_email)
         hintTextColor = ColorStateList(
-            arrayOf(intArrayOf(android.R.attr.state_enabled)),
-            intArrayOf(Color.BLACK)
+            arrayOf(intArrayOf(android.R.attr.state_enabled)), intArrayOf(Color.BLACK)
         )
         boxStrokeWidth = 0
         boxStrokeWidthFocused = 0
@@ -53,27 +49,22 @@ class PasswordTextInputLayout : TextInputLayout {
         mEditText = TextInputEditText(context).apply {
             val layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
             this.layoutParams = layoutParams
-            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            typeface = ResourcesCompat.getFont(context, R.font.poppins_font)
+            inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
             addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
-                    s: CharSequence,
-                    start: Int,
-                    count: Int,
-                    after: Int
+                    s: CharSequence, start: Int, count: Int, after: Int
                 ) {
                     // Do nothing.
                 }
 
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                    val password = s.toString()
-                    this@PasswordTextInputLayout.error = when {
-                        password.isBlank() -> context.getString(
-                            R.string.is_empty,
-                            context.getString(R.string.password)
+                    val email = s.toString()
+                    this@EmailTextInputLayout.error = when {
+                        email.isBlank() -> context.getString(
+                            R.string.is_empty, context.getString(R.string.email)
                         )
-                        !isValidPassword(password) -> context.getString(R.string.password_less_than_eight)
+                        !isValidEmail(email) -> context.getString(R.string.email_not_valid)
                         else -> null
                     }
                 }
@@ -86,11 +77,15 @@ class PasswordTextInputLayout : TextInputLayout {
         addView(mEditText)
     }
 
-    fun isValidPassword(password: String) = password.length >= 8
+    fun isValidEmail(email: String): Boolean {
+        val pattern = Regex(
+            "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"
+        )
+        return pattern.matches(email)
+    }
+
     private val Number.dpToPx
         get() = TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            this.toFloat(),
-            Resources.getSystem().displayMetrics
+            TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), Resources.getSystem().displayMetrics
         )
 }
