@@ -1,11 +1,11 @@
-package com.kevin.storyappdicoding.view.register
+package com.kevin.storyappdicoding.register
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kevin.storyappdicoding.data.model.ApiResponse
-import com.kevin.storyappdicoding.data.model.BaseResponse
-import com.kevin.storyappdicoding.data.repository.AuthRepository
+import com.kevin.storyappdicoding.core.data.model.ApiResponse
+import com.kevin.storyappdicoding.core.data.model.BaseResponse
+import com.kevin.storyappdicoding.core.data.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn

@@ -1,4 +1,4 @@
-package com.kevin.storyappdicoding.view.maps
+package com.kevin.storyappdicoding.maps
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -20,12 +20,12 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.kevin.storyappdicoding.R
-import com.kevin.storyappdicoding.data.model.ApiResponse
+import com.kevin.storyappdicoding.core.R as RCore
+import com.kevin.storyappdicoding.core.data.model.ApiResponse
 import com.kevin.storyappdicoding.databinding.ActivityMapsBinding
 import com.kevin.storyappdicoding.core.view.common.BaseActivity
 import com.kevin.storyappdicoding.view.main.home.DetailBottomDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class MapsActivity : BaseActivity(), OnMapReadyCallback {
@@ -135,7 +135,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                 if (location == null) {
                     Toast.makeText(
                         this,
-                        getString(R.string.your_location_not_found),
+                        getString(RCore.string.your_location_not_found),
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {

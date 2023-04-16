@@ -26,6 +26,7 @@ import com.kevin.storyappdicoding.camera.CameraActivity.Companion.IS_BACK_CAMERA
 import com.kevin.storyappdicoding.camera.CameraActivity.Companion.PICTURE
 import com.kevin.storyappdicoding.core.R
 import com.kevin.storyappdicoding.core.data.model.ApiResponse
+import com.kevin.storyappdicoding.core.utils.Utilities.CAMERA_X_RESULT
 import com.kevin.storyappdicoding.core.utils.Utilities.registerValidateIfEmpty
 import com.kevin.storyappdicoding.core.utils.Utilities.rotateBitmap
 import com.kevin.storyappdicoding.core.utils.Utilities.serializable
@@ -286,7 +287,6 @@ class AddStoryBottomDialogFragment(private val listener: AddStoryListener) :
     }
 
     companion object {
-        const val CAMERA_X_RESULT = 200
         private val REQUIRED_LOCATION_PERMISSIONS =
             arrayOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION)
     }

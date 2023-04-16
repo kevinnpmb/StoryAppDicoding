@@ -12,7 +12,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.kevin.storyappdicoding.R
+import com.kevin.storyappdicoding.core.R
 
 
 class EmailTextInputLayout : TextInputLayout {

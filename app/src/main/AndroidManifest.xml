@@ -60,7 +60,7 @@
             android:value="AIzaSyCSuZBbc3nm_R46C_gufQ3OH6IVdJZviGk" />
 
         <activity
-            android:name=".view.maps.MapsActivity"
+            android:name=".maps.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
@@ -77,14 +77,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.register.RegisterActivity"
+            android:name=".register.RegisterActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.login.LoginActivity"
+            android:name=".login.LoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

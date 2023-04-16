@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.kevin.storyappdicoding.databinding.FragmentAccountBinding
 import com.kevin.storyappdicoding.utils.PreferencesHelper
 import com.kevin.storyappdicoding.core.view.common.BaseFragment
-import com.kevin.storyappdicoding.view.login.LoginActivity
+import com.kevin.storyappdicoding.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -34,7 +34,7 @@ class AccountFragment : BaseFragment() {
             userEmail.text = user?.email ?: "-"
             btnLogout.setOnClickListener {
                 preferencesHelper.user = null
-                startActivity(Intent(requireContext(), LoginActivity::class.java))
+                startActivity(Intent(requireContext(), com.kevin.storyappdicoding.login.LoginActivity::class.java))
                 baseActivity.finish()
             }
         }

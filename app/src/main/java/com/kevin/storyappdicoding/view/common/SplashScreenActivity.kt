@@ -8,7 +8,7 @@ import android.os.Looper
 import androidx.core.app.ActivityOptionsCompat
 import com.kevin.storyappdicoding.databinding.ActivitySplashScreenBinding
 import com.kevin.storyappdicoding.core.view.common.BaseActivity
-import com.kevin.storyappdicoding.view.login.LoginActivity
+import com.kevin.storyappdicoding.login.LoginActivity
 import com.kevin.storyappdicoding.view.main.MainActivity
 
 @SuppressLint("CustomSplashScreen")
@@ -30,7 +30,7 @@ class SplashScreenActivity : BaseActivity() {
             startActivity(
                 Intent(
                     this,
-                    if (preferencesHelper.isLogin) MainActivity::class.java else LoginActivity::class.java
+                    if (preferencesHelper.isLogin) MainActivity::class.java else com.kevin.storyappdicoding.login.LoginActivity::class.java
                 ), optionsCompat.toBundle()
             )
             mShouldFinish = true

@@ -1,4 +1,4 @@
-package com.kevin.storyappdicoding.view.login
+package com.kevin.storyappdicoding.login
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -12,13 +12,13 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import com.google.android.material.textfield.TextInputLayout
-import com.kevin.storyappdicoding.R
+import com.kevin.storyappdicoding.core.R
 import com.kevin.storyappdicoding.StoryAppDicodingApplication
-import com.kevin.storyappdicoding.data.model.ApiResponse
-import com.kevin.storyappdicoding.databinding.ActivityLoginBinding
+import com.kevin.storyappdicoding.core.data.model.ApiResponse
 import com.kevin.storyappdicoding.core.view.common.BaseActivity
+import com.kevin.storyappdicoding.login.databinding.ActivityLoginBinding
 import com.kevin.storyappdicoding.view.main.MainActivity
-import com.kevin.storyappdicoding.view.register.RegisterActivity
+import com.kevin.storyappdicoding.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -38,7 +38,7 @@ class LoginActivity : BaseActivity() {
     private fun initListener() {
         binding.apply {
             register.setOnClickListener {
-                startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+                startActivity(Intent(this@LoginActivity, com.kevin.storyappdicoding.register.RegisterActivity::class.java))
             }
             btnLogin.setOnClickListener {
                 val validationList = mutableListOf<Boolean>().apply {

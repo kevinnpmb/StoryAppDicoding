@@ -16,7 +16,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.kevin.storyappdicoding.R
-import com.kevin.storyappdicoding.view.login.LoginActivity
+import com.kevin.storyappdicoding.login.LoginActivity
 import com.kevin.storyappdicoding.view.main.MainActivity
 import org.junit.Test
 
@@ -29,7 +29,7 @@ class AccountFragmentTest {
         onView(withId(R.id.btnLogout))
             .check(matches(isDisplayed()))
         onView(withId(R.id.btnLogout)).perform(ViewActions.click())
-        Intents.intended(IntentMatchers.hasComponent(LoginActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasComponent(com.kevin.storyappdicoding.login.LoginActivity::class.java.name))
     }
 
     private inline fun <reified T : Fragment> launchFragmentInMainActivity(

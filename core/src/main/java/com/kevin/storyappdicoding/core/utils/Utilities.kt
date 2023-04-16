@@ -22,6 +22,7 @@ import java.util.*
 
 
 object Utilities {
+    const val CAMERA_X_RESULT = 200
     private const val FILENAME_FORMAT = "dd-MMM-yyyy"
 
     inline fun <reified T : Serializable> Intent.serializable(key: String): T? = when {

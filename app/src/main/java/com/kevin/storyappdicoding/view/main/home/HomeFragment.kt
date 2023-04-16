@@ -15,7 +15,7 @@ import com.kevin.storyappdicoding.core.adapter.LoadingStateAdapter
 import com.kevin.storyappdicoding.adapter.StoriesAdapter
 import com.kevin.storyappdicoding.databinding.FragmentHomeBinding
 import com.kevin.storyappdicoding.core.view.common.BaseFragment
-import com.kevin.storyappdicoding.view.maps.MapsActivity
+import com.kevin.storyappdicoding.maps.MapsActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -114,7 +114,7 @@ class HomeFragment : BaseFragment() {
 
             showOnMap.setOnClickListener {
                 startActivity(
-                    Intent(requireContext(), MapsActivity::class.java)
+                    Intent(requireContext(), com.kevin.storyappdicoding.maps.MapsActivity::class.java)
                 )
             }
         }

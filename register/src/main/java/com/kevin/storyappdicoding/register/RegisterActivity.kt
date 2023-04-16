@@ -1,4 +1,4 @@
-package com.kevin.storyappdicoding.view.register
+package com.kevin.storyappdicoding.register
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -6,12 +6,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import com.kevin.storyappdicoding.R
-import com.kevin.storyappdicoding.data.model.ApiResponse
-import com.kevin.storyappdicoding.databinding.ActivityRegisterBinding
-import com.kevin.storyappdicoding.utils.Utilities.registerValidateIfEmpty
-import com.kevin.storyappdicoding.utils.Utilities.validate
+import com.kevin.storyappdicoding.core.R
+import com.kevin.storyappdicoding.core.data.model.ApiResponse
+import com.kevin.storyappdicoding.core.utils.Utilities.registerValidateIfEmpty
+import com.kevin.storyappdicoding.core.utils.Utilities.validate
 import com.kevin.storyappdicoding.core.view.common.BaseActivity
+import com.kevin.storyappdicoding.register.databinding.ActivityRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

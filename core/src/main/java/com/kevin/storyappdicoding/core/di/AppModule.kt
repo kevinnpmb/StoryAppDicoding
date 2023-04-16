@@ -3,7 +3,6 @@ package com.kevin.storyappdicoding.core.di
 import android.content.Context
 import androidx.room.Room
 import com.google.gson.Gson
-import com.kevin.storyappdicoding.core.BuildConfig
 import com.kevin.storyappdicoding.core.data.model.RequestHeaders
 import com.kevin.storyappdicoding.core.database.StoryDatabase
 import com.kevin.storyappdicoding.core.utils.RequestInterceptor
@@ -24,7 +23,6 @@ import javax.inject.Singleton
 class AppModule {
     @Provides
     fun providesOkHttpClient(
-        logging: HttpLoggingInterceptor,
         requestInterceptor: RequestInterceptor
     ): OkHttpClient {
         var cipherSuites: MutableList<CipherSuite>? =
@@ -34,11 +32,7 @@ class AppModule {
             cipherSuites.add(CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA)
         }
         val spec = listOf(ConnectionSpec.CLEARTEXT, ConnectionSpec.MODERN_TLS)
-        return OkHttpClient.Builder().apply {
-            if (BuildConfig.DEBUG) {
-                addInterceptor(logging)
-            }
-        }
+        return OkHttpClient.Builder()
             .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)

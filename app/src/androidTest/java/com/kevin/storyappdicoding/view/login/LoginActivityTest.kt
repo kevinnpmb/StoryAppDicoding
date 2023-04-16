@@ -13,7 +13,6 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.kevin.storyappdicoding.R
-import com.kevin.storyappdicoding.core.data.ApiConfig
 import com.kevin.storyappdicoding.utils.EspressoIdlingResource
 import com.kevin.storyappdicoding.utils.JsonConverter
 import com.kevin.storyappdicoding.utils.Utilities.getResourceString
@@ -36,7 +35,7 @@ import org.junit.runner.RunWith
 @LargeTest
 class LoginActivityTest {
     @get:Rule
-    val activity = ActivityScenarioRule(LoginActivity::class.java)
+    val activity = ActivityScenarioRule(com.kevin.storyappdicoding.login.LoginActivity::class.java)
     private val mockWebServer = MockWebServer()
     private var decorView: View? = null
 
