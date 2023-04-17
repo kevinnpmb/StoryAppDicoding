@@ -43,28 +43,27 @@ android {
 }
 
 dependencies {
-    // okhttpclient
-    implementation platform("com.squareup.okhttp3:okhttp-bom:4.10.0")
-    implementation 'com.squareup.okhttp3:okhttp'
-    implementation 'com.squareup.okhttp3:logging-interceptor'
-
-    // lottie-files
-    implementation 'com.airbnb.android:lottie:5.2.0'
-
-    // retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-
-    // Paging
-    def paging_version = "3.1.1"
-    implementation "androidx.paging:paging-runtime:$paging_version"
-    // alternatively - without Android dependencies for tests
-    testImplementation "androidx.paging:paging-common:$paging_version"
-    implementation 'androidx.room:room-ktx:2.5.0'
-    implementation 'androidx.room:room-paging:2.5.0'
-    kapt 'androidx.room:room-compiler:2.5.0'
-
-    // Picasso
-    implementation 'com.squareup.picasso:picasso:2.71828'
-
+//    // okhttpclient
+//    implementation platform("com.squareup.okhttp3:okhttp-bom:4.10.0")
+//    implementation 'com.squareup.okhttp3:okhttp'
+//    implementation 'com.squareup.okhttp3:logging-interceptor'
+//
+//    // lottie-files
+//    implementation 'com.airbnb.android:lottie:5.2.0'
+//
+//    // retrofit
+//    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+//    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+//
+//    // Paging
+//    def paging_version = "3.1.1"
+//    implementation "androidx.paging:paging-runtime:$paging_version"
+//    // alternatively - without Android dependencies for tests
+//    testImplementation "androidx.paging:paging-common:$paging_version"
+//    implementation 'androidx.room:room-ktx:2.5.0'
+//    implementation 'androidx.room:room-paging:2.5.0'
+//    kapt 'androidx.room:room-compiler:2.5.0'
+//
+//    // Picasso
+//    implementation 'com.squareup.picasso:picasso:2.71828'
 }
