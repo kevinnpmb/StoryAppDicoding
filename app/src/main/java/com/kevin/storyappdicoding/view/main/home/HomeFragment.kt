@@ -7,12 +7,12 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
-import com.kevin.storyappdicoding.adapter.LoadingStateAdapter
 import com.kevin.storyappdicoding.adapter.StoriesAdapter
+import com.kevin.storyappdicoding.data.model.Response
 import com.kevin.storyappdicoding.databinding.FragmentHomeBinding
 import com.kevin.storyappdicoding.view.common.BaseFragment
 import com.kevin.storyappdicoding.view.maps.MapsActivity
@@ -46,31 +46,7 @@ class HomeFragment : BaseFragment() {
                     root.isEnabled = !rvHome.canScrollVertically(-1) && dy < 0
                 }
             })
-            rvHome.adapter = adapter.apply {
-                addLoadStateListener { loadStates ->
-                    viewModel.taskListState.value = when (loadStates.source.refresh) {
-                        is LoadState.NotLoading -> {
-                            if (loadStates.append.endOfPaginationReached && itemCount < 1) {
-                                HomeViewModel.TaskListState.EMPTY
-                            } else {
-                                HomeViewModel.TaskListState.PRESENT
-                            }
-                        }
-                        is LoadState.Loading -> {
-                            if (adapter.itemCount == 0) {
-                                HomeViewModel.TaskListState.LOADING
-                            } else {
-                                HomeViewModel.TaskListState.PRESENT
-                            }
-                        }
-                        is LoadState.Error -> HomeViewModel.TaskListState.ERROR
-                    }
-                }
-            }.withLoadStateFooter(
-                footer = LoadingStateAdapter {
-                    adapter.retry()
-                }
-            )
+            rvHome.adapter = adapter
         }
         initObserver()
         initListener()
@@ -86,22 +62,30 @@ class HomeFragment : BaseFragment() {
 
     private fun initObserver() {
         viewModel.storiesResult.observe(viewLifecycleOwner) {
-            adapter.submitData(lifecycle, it)
+            binding.apply {
+                root.isRefreshing = false
+                loading.root.isVisible = it is Response.Loading
+                error.root.isVisible = it is Response.Error
+                empty.root.isVisible = false
+                rvHome.isVisible = false
+
+                when (it) {
+                    is Response.Loading -> {}
+                    is Response.Error -> {
+                        Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                    }
+                    is Response.Success -> {
+                        empty.root.isVisible = it.data.isNullOrEmpty()
+                        rvHome.isVisible = !empty.root.isVisible
+                        adapter.submitList(it.data)
+                    }
+                }
+            }
             if (scrollToTop) {
                 Handler(Looper.getMainLooper()).postDelayed({
                     binding.rvHome.smoothScrollToPosition(0)
                     scrollToTop = false
                 }, 500)
-            }
-        }
-
-        viewModel.taskListState.observe(viewLifecycleOwner) {
-            binding.apply {
-                root.isRefreshing = false
-                loading.root.isVisible = it == HomeViewModel.TaskListState.LOADING
-                empty.root.isVisible = it == HomeViewModel.TaskListState.EMPTY
-                error.root.isVisible = it == HomeViewModel.TaskListState.ERROR
-                rvHome.isVisible = it == HomeViewModel.TaskListState.PRESENT
             }
         }
     }

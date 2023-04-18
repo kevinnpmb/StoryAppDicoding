@@ -4,7 +4,7 @@ package com.kevin.storyappdicoding.utils
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
-import com.kevin.storyappdicoding.data.model.User
+import com.kevin.storyappdicoding.database.model.User
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,7 +26,7 @@ class PreferencesHelper @Inject constructor(@ApplicationContext context: Context
         get() = pref.getString(PREF_KEY_USER, null)?.let { gson.fromJson(it, User::class.java) }
         set(user) = pref.edit().putString(PREF_KEY_USER, gson.toJson(user)).apply()
 
-    val isLogin: Boolean get() = user?.token != null
+    val isLogin: Boolean get() = user != null
 
     companion object {
         private const val PREF_BUFFER_PACKAGE_NAME = "com.kevin.storyappdicoding"

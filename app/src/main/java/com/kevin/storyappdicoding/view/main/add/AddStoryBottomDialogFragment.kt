@@ -22,7 +22,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kevin.storyappdicoding.R
-import com.kevin.storyappdicoding.data.model.ApiResponse
+import com.kevin.storyappdicoding.data.model.Response
 import com.kevin.storyappdicoding.databinding.FragmentAddBottomDialogBinding
 import com.kevin.storyappdicoding.utils.Utilities.registerValidateIfEmpty
 import com.kevin.storyappdicoding.utils.Utilities.rotateBitmap
@@ -121,10 +121,10 @@ class AddStoryBottomDialogFragment(private val listener: AddStoryListener) :
             storyResult.observe(viewLifecycleOwner) {
                 binding.apply {
                     when (it) {
-                        is ApiResponse.Loading -> {
+                        is Response.Loading -> {
                             baseActivity.loadingDialog.show()
                         }
-                        is ApiResponse.Success -> {
+                        is Response.Success -> {
                             baseActivity.loadingDialog.dismiss()
                             Toast.makeText(
                                 requireContext(),
@@ -134,7 +134,7 @@ class AddStoryBottomDialogFragment(private val listener: AddStoryListener) :
                             dismiss()
                             listener.onStoryAddedSuccessfully()
                         }
-                        is ApiResponse.Error -> {
+                        is Response.Error -> {
                             baseActivity.loadingDialog.dismiss()
                             Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_LONG)
                                 .show()

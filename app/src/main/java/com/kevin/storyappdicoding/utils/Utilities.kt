@@ -69,7 +69,8 @@ object Utilities {
 
     fun ImageView.setImageResource(url: String?) {
         if (!url.isNullOrBlank()) {
-            Picasso.get().load(url).error(R.drawable.ic_no_images).into(this)
+            val file = File(url)
+            Picasso.get().load(file).error(R.drawable.ic_no_images).into(this)
         } else {
             setImageResource(R.drawable.ic_no_images)
         }

@@ -46,4 +46,6 @@
     <string name="by_map">Oleh Map</string>
     <string name="failed_to_show_camera">Gagal memunculkan kamera</string>
     <string name="failed_to_take_picture">Gagal mengambil gambar</string>
+    <string name="wrong_email_or_password">E-mail atau password salah</string>
+    <string name="register_success">Pendaftaran sukses!</string>
 </resources>

@@ -9,22 +9,23 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.kevin.storyappdicoding.data.model.ApiResponse
+import com.kevin.storyappdicoding.data.model.Response
 import com.kevin.storyappdicoding.databinding.FragmentDetailBottomDialogBinding
 import com.kevin.storyappdicoding.utils.Utilities.setImageResource
 import com.kevin.storyappdicoding.view.common.BaseBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class DetailBottomDialogFragment : BaseBottomSheetDialogFragment() {
     private lateinit var binding: FragmentDetailBottomDialogBinding
-    private lateinit var storyId: String
+    private var storyId by Delegates.notNull<Int>()
     private val viewModel: DetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            storyId = it.getString(STORY_ID).toString()
+            storyId = it.getInt(STORY_ID)
         }
     }
 
@@ -47,20 +48,20 @@ class DetailBottomDialogFragment : BaseBottomSheetDialogFragment() {
     private fun initObserver() {
         viewModel.storyResult.observe(viewLifecycleOwner) {
             binding.apply {
-                loading.root.isVisible = it is ApiResponse.Loading
-                error.root.isVisible = it is ApiResponse.Error
+                loading.root.isVisible = it is Response.Loading
+                error.root.isVisible = it is Response.Error
                 background.isVisible = loading.root.isVisible || error.root.isVisible
                 when (it) {
-                    is ApiResponse.Loading -> {
+                    is Response.Loading -> {
                         nsvDetail.isVisible = false
                     }
-                    is ApiResponse.Success -> {
+                    is Response.Success -> {
                         nsvDetail.isVisible = true
-                        storyImage.setImageResource(it.data?.story?.photoUrl)
-                        storyDescription.text = it.data?.story?.description
-                        storyName.text = it.data?.story?.name
+                        storyImage.setImageResource(it.data?.photoPath)
+                        storyDescription.text = it.data?.description
+                        storyName.text = it.data?.name
                     }
-                    is ApiResponse.Error -> {
+                    is Response.Error -> {
                         nsvDetail.isVisible = false
                         Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_LONG)
                             .show()
@@ -93,10 +94,10 @@ class DetailBottomDialogFragment : BaseBottomSheetDialogFragment() {
         private const val STORY_ID = "STORY_ID"
 
         @JvmStatic
-        fun newInstance(storyId: String) =
+        fun newInstance(storyId: Int) =
             DetailBottomDialogFragment().apply {
                 arguments = Bundle().apply {
-                    putString(STORY_ID, storyId)
+                    putInt(STORY_ID, storyId)
                 }
             }
     }

@@ -60,6 +60,7 @@ class CameraActivity : AppCompatActivity() {
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
+                    exc.printStackTrace()
                     Toast.makeText(
                         this@CameraActivity,
                         getString(R.string.failed_to_take_picture),

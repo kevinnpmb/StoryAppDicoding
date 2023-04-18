@@ -9,12 +9,12 @@ import android.os.Handler
 import android.os.Looper
 import android.transition.Fade
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import com.google.android.material.textfield.TextInputLayout
 import com.kevin.storyappdicoding.R
-import com.kevin.storyappdicoding.StoryAppDicodingApplication
-import com.kevin.storyappdicoding.data.model.ApiResponse
+import com.kevin.storyappdicoding.data.model.Response
 import com.kevin.storyappdicoding.databinding.ActivityLoginBinding
 import com.kevin.storyappdicoding.view.common.BaseActivity
 import com.kevin.storyappdicoding.view.main.MainActivity
@@ -59,19 +59,24 @@ class LoginActivity : BaseActivity() {
         viewModel.apply {
             loginResult.observe(this@LoginActivity) {
                 when (it) {
-                    is ApiResponse.Loading -> {
+                    is Response.Loading -> {
                         loadingDialog.show()
                     }
-                    is ApiResponse.Success -> {
+                    is Response.Success -> {
                         loadingDialog.dismiss()
-                        preferencesHelper.user = it.data?.loginResult?.copy(
-                            email = binding.loginEmail.editText?.text.toString(),
-                        )
-                        (application as StoryAppDicodingApplication).setTokenToHeader()
-                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                        finish()
+                        if (it.data?.first == true) {
+                            preferencesHelper.user = it.data.second
+                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                            finish()
+                        } else {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                getString(R.string.wrong_email_or_password),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
-                    is ApiResponse.Error -> {
+                    is Response.Error -> {
                         loadingDialog.dismiss()
                         binding.tvError.apply {
                             isVisible = true

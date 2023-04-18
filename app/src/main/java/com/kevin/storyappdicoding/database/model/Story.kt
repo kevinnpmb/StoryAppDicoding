@@ -1,4 +1,4 @@
-package com.kevin.storyappdicoding.data.model
+package com.kevin.storyappdicoding.database.model
 
 import android.os.Parcelable
 import androidx.room.Entity
@@ -8,12 +8,11 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "table_story")
 @Parcelize
 data class Story(
-    @PrimaryKey
-    val id: String,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
     val name: String,
     val description: String,
-    val photoUrl: String,
-    val createdAt: String,
+    val photoPath: String,
     val lat: Float? = null,
     val lon: Float? = null,
 ) : Parcelable

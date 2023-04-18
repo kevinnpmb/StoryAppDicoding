@@ -20,7 +20,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.kevin.storyappdicoding.R
-import com.kevin.storyappdicoding.data.model.ApiResponse
+import com.kevin.storyappdicoding.data.model.Response
 import com.kevin.storyappdicoding.databinding.ActivityMapsBinding
 import com.kevin.storyappdicoding.view.common.BaseActivity
 import com.kevin.storyappdicoding.view.main.home.DetailBottomDialogFragment
@@ -66,9 +66,9 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
     private fun initObserver() {
         viewModel.storiesResult.observe(this) {
             binding.apply {
-                retryButton.isVisible = it is ApiResponse.Error
-                if (it is ApiResponse.Success) {
-                    it.data?.listStory?.forEach { story ->
+                retryButton.isVisible = it is Response.Error
+                if (it is Response.Success) {
+                    it.data?.forEach { story ->
                         mMap.addMarker(
                             MarkerOptions().position(
                                 LatLng(
@@ -98,7 +98,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap.apply {
             setOnMarkerClickListener {
-                DetailBottomDialogFragment.newInstance(it.tag.toString().substring(11))
+                DetailBottomDialogFragment.newInstance(it.tag.toString().substring(11).toInt())
                     .show(supportFragmentManager, "story_detail_tag")
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(it.position, 12.0f))
                 true

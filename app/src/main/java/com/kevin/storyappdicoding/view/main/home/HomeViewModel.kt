@@ -5,7 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.kevin.storyappdicoding.data.model.Story
+import com.kevin.storyappdicoding.data.model.Response
+import com.kevin.storyappdicoding.database.model.Story
 import com.kevin.storyappdicoding.data.repository.StoryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -15,10 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val storyRepository: StoryRepository) :
     ViewModel() {
-    private val _storiesResult = MutableLiveData<PagingData<Story>>()
-    val storiesResult: LiveData<PagingData<Story>> get() = _storiesResult
-
-    val taskListState = MutableLiveData(TaskListState.LOADING)
+    private val _storiesResult = MutableLiveData<Response<List<Story>>>()
+    val storiesResult: LiveData<Response<List<Story>>> get() = _storiesResult
 
     fun getStories() {
         viewModelScope.launch {
@@ -26,12 +25,5 @@ class HomeViewModel @Inject constructor(private val storyRepository: StoryReposi
                 _storiesResult.postValue(it)
             }
         }
-    }
-
-    enum class TaskListState {
-        LOADING,
-        EMPTY,
-        ERROR,
-        PRESENT
     }
 }

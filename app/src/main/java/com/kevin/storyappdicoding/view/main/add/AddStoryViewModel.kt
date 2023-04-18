@@ -4,8 +4,7 @@ import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kevin.storyappdicoding.data.model.ApiResponse
-import com.kevin.storyappdicoding.data.model.BaseResponse
+import com.kevin.storyappdicoding.data.model.Response
 import com.kevin.storyappdicoding.data.repository.StoryRepository
 import com.kevin.storyappdicoding.utils.Utilities
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +21,7 @@ class AddStoryViewModel @Inject constructor(private val storyRepository: StoryRe
     var location: Location? = null
     var isBackCamera: Boolean? = null
     val isShowLocation = MutableLiveData(false)
-    val storyResult = MutableLiveData<ApiResponse<BaseResponse>>()
+    val storyResult = MutableLiveData<Response<Long>>()
     fun addStory(description: String) {
         viewModelScope.launch {
             photoFile?.let { photoFile ->

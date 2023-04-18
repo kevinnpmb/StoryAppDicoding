@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.kevin.storyappdicoding.R
-import com.kevin.storyappdicoding.data.model.ApiResponse
+import com.kevin.storyappdicoding.data.model.Response
 import com.kevin.storyappdicoding.databinding.ActivityRegisterBinding
 import com.kevin.storyappdicoding.utils.Utilities.registerValidateIfEmpty
 import com.kevin.storyappdicoding.utils.Utilities.validate
@@ -56,16 +56,16 @@ class RegisterActivity : BaseActivity() {
         viewModel.apply {
             registerResult.observe(this@RegisterActivity) {
                 when (it) {
-                    is ApiResponse.Loading -> {
+                    is Response.Loading -> {
                         loadingDialog.show()
                     }
-                    is ApiResponse.Success -> {
+                    is Response.Success -> {
                         loadingDialog.dismiss()
-                        Toast.makeText(this@RegisterActivity, it.data?.message, Toast.LENGTH_LONG)
+                        Toast.makeText(this@RegisterActivity, getString(R.string.register_success), Toast.LENGTH_LONG)
                             .show()
                         finish()
                     }
-                    is ApiResponse.Error -> {
+                    is Response.Error -> {
                         loadingDialog.dismiss()
                         Toast.makeText(this@RegisterActivity, it.errorMessage, Toast.LENGTH_LONG)
                             .show()
